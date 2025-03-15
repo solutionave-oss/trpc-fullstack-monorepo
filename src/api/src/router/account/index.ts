@@ -41,6 +41,6 @@ export const accountRouter = trpcRouter({
     }),
   getInfo: trpcProcedure.query(async ({ ctx }) => {
     const account = await ctx.getAuth();
-    console.log(account);
+    return account;
   }),
 });
