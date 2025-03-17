@@ -1,3 +1,17 @@
+'use client';
+
+import { useAuthState } from 'src/web/src/context/AuthContext';
+
 export default function Index() {
-  return <div>Your Organisations</div>;
+  const { authData } = useAuthState();
+
+  return (
+    <div>
+      {authData.organisationMember.map((organisation) => (
+        <div key={`${organisation.accountId}-${organisation.organisationId}`}>
+          {organisation.organisation.name}
+        </div>
+      ))}
+    </div>
+  );
 }

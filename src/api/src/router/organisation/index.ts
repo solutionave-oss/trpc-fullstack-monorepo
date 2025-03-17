@@ -30,4 +30,26 @@ export const organisationRouter = trpcRouter({
 
       return response;
     }),
+  getOrganisations: trpcProcedure.query(
+    async ({ ctx: { prisma, getAuth } }) => {
+      const auth = await getAuth();
+      if (!auth) {
+        throw new Error('Invalid Token');
+      }
+
+      const response = await prisma.organisation.findMany({
+        where: {
+          organisationMember: {
+            some: {
+              account: {
+                id: auth.id,
+              },
+            },
+          },
+        },
+      });
+
+      return response;
+    }
+  ),
 });

@@ -10,10 +10,14 @@ type AuthContextType = {
   authData: StateType;
 };
 
-export const initialState = () => ({
+export const initialState = (): {
+  authData: StateType;
+  setAuthData: (data: StateType) => void;
+} => ({
   authData: {
     email: '',
     id: '',
+    organisationMember: [],
   },
   setAuthData(data: StateType) {
     //

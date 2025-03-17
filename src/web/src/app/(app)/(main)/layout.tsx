@@ -1,21 +1,13 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { ReactNode, useEffect } from 'react';
-import { useAuthState } from 'src/web/src/context/AuthContext';
+import { ReactNode } from 'react';
+import { AuthRedirector } from 'src/web/src/components/AuthRedirector';
+import { Header } from 'src/web/src/components/Header';
 
 export default function Index({ children }: { children: ReactNode }) {
-  const { authData } = useAuthState();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (!authData?.id) {
-      return router.push('/sign-in');
-    }
-    if (!authData?.organisationMember.length) {
-      return router.push('/organisation/create');
-    }
-  }, [authData, router]);
-
-  return <div className="w-screen h-screen">{children}</div>;
+  return (
+    <div className="w-screen h-screen flex flex-col">
+      <AuthRedirector />
+      <Header />
+      <div className="flex-1">{children}</div>
+    </div>
+  );
 }

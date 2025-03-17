@@ -36,8 +36,8 @@ export const getAuth = (
     throw new Error('Invalid Token');
   }
 
-  return () =>
-    prisma.account.findUnique({
+  return async () => {
+    const account = await prisma.account.findUnique({
       where: { id },
       omit: { password: true },
       include: {
@@ -49,4 +49,9 @@ export const getAuth = (
         },
       },
     });
+    if (!account) {
+      throw new Error('No User Found');
+    }
+    return account;
+  };
 };

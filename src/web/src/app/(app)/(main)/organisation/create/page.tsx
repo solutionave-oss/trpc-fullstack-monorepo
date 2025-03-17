@@ -31,7 +31,7 @@ export default function Index() {
     if (response.id) {
       const authData = await api.accountRouter.getInfo.query();
       setAuthData(authData);
-      return router.push('/');
+      router.push('/');
     }
   };
 
