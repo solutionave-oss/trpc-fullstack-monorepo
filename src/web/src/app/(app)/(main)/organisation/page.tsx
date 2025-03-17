@@ -7,7 +7,7 @@ export default function Index() {
 
   return (
     <div>
-      {authData.organisationMember.map((organisation) => (
+      {authData.account.organisationMember.map((organisation) => (
         <div key={`${organisation.accountId}-${organisation.organisationId}`}>
           {organisation.organisation.name}
         </div>

@@ -20,7 +20,7 @@ export const organisationRouter = trpcRouter({
             create: {
               account: {
                 connect: {
-                  id: auth.id,
+                  id: auth.account.id,
                 },
               },
             },
@@ -30,26 +30,17 @@ export const organisationRouter = trpcRouter({
 
       return response;
     }),
-  getOrganisations: trpcProcedure.query(
-    async ({ ctx: { prisma, getAuth } }) => {
-      const auth = await getAuth();
-      if (!auth) {
-        throw new Error('Invalid Token');
-      }
 
-      const response = await prisma.organisation.findMany({
-        where: {
-          organisationMember: {
-            some: {
-              account: {
-                id: auth.id,
-              },
-            },
-          },
-        },
-      });
-
-      return response;
-    }
-  ),
+  setOrganisation: trpcProcedure
+    .input(
+      z.object({
+        code: z.string(),
+      })
+    )
+    .query(({ input, ctx: { Cookie, res } }) => {
+      res.setHeader(
+        'Set-Cookie',
+        Cookie.setCookieValue('organisation', input.code)
+      );
+    }),
 });

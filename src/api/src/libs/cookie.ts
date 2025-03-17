@@ -6,6 +6,7 @@ import { JWT } from './jwt';
 export class Cookie {
   static setToken = (ctx: Ctx, id: string) => {
     const token = ctx.JWT.Sign({ id });
+
     ctx.res.setHeader(
       'Set-Cookie',
       cookie.serialize('token', token, {
@@ -58,5 +59,21 @@ export class Cookie {
       return { id: '' };
     }
     return JWT.Decode(token);
+  };
+
+  static setCookieValue = (key: string, value: string) => {
+    return cookie.serialize(key, value, {
+      maxAge: 60 * 60 * 24,
+      domain: '.localhost',
+      path: '/',
+      sameSite: 'lax',
+      priority: 'high',
+      httpOnly: true,
+      secure: false,
+    });
+  };
+
+  static getCookieValue = (headers: string) => {
+    return cookie.parse(headers);
   };
 }

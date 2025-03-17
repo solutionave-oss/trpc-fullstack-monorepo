@@ -5,12 +5,31 @@ import { Dropdown } from './Dropdown';
 import { useAuthState } from '../context/AuthContext';
 import { useOrganisationState } from '../context/OrganisationContext';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 export const Header = () => {
   const router = useRouter();
   const { authData } = useAuthState();
   const { selectedOrganisation, setSelectedOrganisation } =
     useOrganisationState();
+
+  useEffect(() => {
+    const organisations = authData.account.organisationMember.map(
+      (orgmem) => orgmem.organisation
+    );
+
+    const preSelectedOrg = organisations.find(
+      (org) => org.code === authData.organisation?.code
+    );
+
+    if (preSelectedOrg) {
+      setSelectedOrganisation?.(preSelectedOrg);
+    }
+  }, [
+    authData.account.organisationMember,
+    authData.organisation?.code,
+    setSelectedOrganisation,
+  ]);
 
   return (
     <div
@@ -27,14 +46,14 @@ export const Header = () => {
             return;
           }
 
-          const existing = authData.organisationMember.find(
+          const existing = authData.account.organisationMember.find(
             (org) => org.organisation.code === data.value
           );
           if (existing?.organisation) {
             setSelectedOrganisation?.(existing?.organisation);
           }
         }}
-        options={authData.organisationMember
+        options={authData.account.organisationMember
           .map((orgmem) => ({
             label: orgmem.organisation.name,
             value: orgmem.organisation.code,

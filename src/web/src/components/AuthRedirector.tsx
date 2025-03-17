@@ -9,9 +9,9 @@ export const AuthRedirector = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!authData?.id) {
+    if (!authData.account?.id) {
       router.push('/sign-in');
-    } else if (!authData?.organisationMember.length) {
+    } else if (!authData.account?.organisationMember.length) {
       router.push('/organisation/create');
     }
   }, [authData, router]);

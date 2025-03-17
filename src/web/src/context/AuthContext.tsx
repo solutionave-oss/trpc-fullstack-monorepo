@@ -15,9 +15,16 @@ export const initialState = (): {
   setAuthData: (data: StateType) => void;
 } => ({
   authData: {
-    email: '',
-    id: '',
-    organisationMember: [],
+    account: {
+      email: '',
+      id: '',
+      organisationMember: [],
+    },
+    organisation: {
+      id: '',
+      code: '',
+      name: '',
+    },
   },
   setAuthData(data: StateType) {
     //

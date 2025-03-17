@@ -2,6 +2,7 @@
 
 import { Organisation } from '@prisma/client';
 import { createContext, FC, ReactNode, useContext, useState } from 'react';
+import { api } from '../client/trpc';
 
 const OrganisationContext = createContext<{
   selectedOrganisation?: Organisation;
@@ -14,8 +15,11 @@ export const OrganisationProvider: FC<{ children: ReactNode }> = ({
   const [selectedOrganisation, _setSelectedOrganisation] =
     useState<Organisation>();
 
-  const setSelectedOrganisation = (org: Organisation) =>
-    _setSelectedOrganisation(org);
+  const setSelectedOrganisation = (org: Organisation) => {
+    api.organisationRouter.setOrganisation
+      .query({ code: org.code })
+      .then(() => _setSelectedOrganisation(org));
+  };
 
   return (
     <OrganisationContext.Provider

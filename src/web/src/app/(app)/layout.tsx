@@ -6,9 +6,16 @@ import { OrganisationProvider } from '../../context/OrganisationContext';
 
 export default async function Layout({ children }: { children: ReactNode }) {
   let authData: Awaited<ReturnType<typeof api.accountRouter.getInfo.query>> = {
-    email: '',
-    id: '',
-    organisationMember: [],
+    account: {
+      email: '',
+      id: '',
+      organisationMember: [],
+    },
+    organisation: {
+      id: '',
+      code: '',
+      name: '',
+    },
   };
 
   try {

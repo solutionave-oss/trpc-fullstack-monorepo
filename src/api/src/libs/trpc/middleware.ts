@@ -25,7 +25,9 @@ export const getAuth = (
   res: ServerResponse<IncomingMessage>,
   prisma: PrismaClient
 ) => {
-  const id = Cookie.getAuthUserId(req, res).id;
+  const id = Cookie.getAuthUserId(req, res)['id'];
+  const organisationCode =
+    Cookie.getCookieValue(req.headers.cookie)['organisation'] ?? '';
 
   if (isOpenRoute(req)) {
     Cookie.resetCookie(res);
@@ -37,21 +39,29 @@ export const getAuth = (
   }
 
   return async () => {
-    const account = await prisma.account.findUnique({
-      where: { id },
-      omit: { password: true },
-      include: {
-        organisationMember: {
-          include: {
-            account: false,
-            organisation: true,
+    const [organisation, account] = await Promise.all([
+      prisma.organisation.findUnique({
+        where: {
+          code: organisationCode,
+        },
+      }),
+      prisma.account.findUnique({
+        where: { id },
+        omit: { password: true },
+        include: {
+          organisationMember: {
+            include: {
+              account: false,
+              organisation: true,
+            },
           },
         },
-      },
-    });
+      }),
+    ]);
+
     if (!account) {
       throw new Error('No User Found');
     }
-    return account;
+    return { account, organisation };
   };
 };

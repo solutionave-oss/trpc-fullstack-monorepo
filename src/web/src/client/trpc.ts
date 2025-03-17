@@ -14,8 +14,13 @@ export const api = createTRPCProxyClient<AppRouter>({
   ],
 });
 
-export const serverApi = (cookies: ReadonlyRequestCookies) =>
-  createTRPCProxyClient<AppRouter>({
+export const serverApi = (cookies: ReadonlyRequestCookies) => {
+  const cookieHeader = cookies
+    .getAll()
+    .map(({ name, value }) => `${name}=${value}`)
+    .join('; ');
+
+  return createTRPCProxyClient<AppRouter>({
     links: [
       httpBatchLink({
         url,
@@ -24,9 +29,10 @@ export const serverApi = (cookies: ReadonlyRequestCookies) =>
             ...options,
             credentials: 'include',
             headers: {
-              Cookie: `token=${cookies.get('token')?.value || ''}`,
+              Cookie: cookieHeader,
             },
           }),
       }),
     ],
   });
+};
