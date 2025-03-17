@@ -7,6 +7,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
   let authData: Awaited<ReturnType<typeof api.accountRouter.getInfo.query>> = {
     email: '',
     id: '',
+    organisationMember: [],
   };
 
   try {

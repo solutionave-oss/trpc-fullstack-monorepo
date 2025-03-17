@@ -14,7 +14,32 @@ datasource db {
 }
 
 model Account {
-  id       String @id @default(cuid())
-  email    String @unique
-  password String
+  id                 String               @id @default(cuid())
+  email              String               @unique
+  password           String
+  organisationMember OrganisationMember[]
+}
+
+model Organisation {
+  id                 String               @id @default(cuid())
+  name               String
+  code               String               @unique
+  organisationMember OrganisationMember[]
+}
+
+enum OrganisationRole {
+  owner
+  admin
+  member
+  viewer
+}
+
+model OrganisationMember {
+  account        Account          @relation(fields: [accountId], references: [id])
+  accountId      String
+  organisation   Organisation     @relation(fields: [organisationId], references: [id])
+  organisationId String
+  role           OrganisationRole @default(viewer)
+
+  @@id([accountId, organisationId])
 }

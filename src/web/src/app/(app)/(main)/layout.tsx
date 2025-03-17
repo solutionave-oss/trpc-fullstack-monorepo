@@ -10,9 +10,12 @@ export default function Index({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!authData?.id) {
-      router.push('/sign-in');
+      return router.push('/sign-in');
+    }
+    if (!authData?.organisationMember.length) {
+      return router.push('/organisation/create');
     }
   }, [authData, router]);
 
-  return children;
+  return <div className="w-screen h-screen">{children}</div>;
 }

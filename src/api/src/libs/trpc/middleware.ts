@@ -40,5 +40,13 @@ export const getAuth = (
     prisma.account.findUnique({
       where: { id },
       omit: { password: true },
+      include: {
+        organisationMember: {
+          include: {
+            account: false,
+            organisation: true,
+          },
+        },
+      },
     });
 };

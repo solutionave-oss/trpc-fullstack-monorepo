@@ -1,5 +1,5 @@
 import { object, string } from 'zod';
-import { trpcProcedure, trpcRouter } from '../../utils/trpc';
+import { trpcProcedure, trpcRouter } from '../../libs/trpc';
 
 export const accountRouter = trpcRouter({
   signIn: trpcProcedure

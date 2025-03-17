@@ -1,8 +1,8 @@
 import { createHTTPServer } from '@trpc/server/adapters/standalone';
-import { createContext } from './utils/trpc/context';
+import { createContext } from './libs/trpc/context';
 import { router } from './router';
-import { middleware } from './utils/trpc/middleware';
-import { listening } from './utils/trpc/listener';
+import { middleware } from './libs/trpc/middleware';
+import { listening } from './libs/trpc/listener';
 
 export const { server } = createHTTPServer({
   router,
