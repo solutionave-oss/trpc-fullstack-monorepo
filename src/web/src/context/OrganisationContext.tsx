@@ -3,6 +3,7 @@
 import { Organisation } from '@prisma/client';
 import { createContext, FC, ReactNode, useContext, useState } from 'react';
 import { api } from '../client/trpc';
+import { useAuthState } from './AuthContext';
 
 const OrganisationContext = createContext<{
   selectedOrganisation?: Organisation;
@@ -12,13 +13,21 @@ const OrganisationContext = createContext<{
 export const OrganisationProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
+  const { setAuthData } = useAuthState();
   const [selectedOrganisation, _setSelectedOrganisation] =
     useState<Organisation>();
 
   const setSelectedOrganisation = (org: Organisation) => {
     api.organisationRouter.setOrganisation
       .query({ code: org.code })
-      .then(() => _setSelectedOrganisation(org));
+      .then(() => {
+        api.accountRouter.getInfo.query().then((data) => {
+          if (data.currentOrganisation) {
+            _setSelectedOrganisation(data.currentOrganisation);
+            setAuthData(data);
+          }
+        });
+      });
   };
 
   return (

@@ -5,26 +5,12 @@ import { Dropdown } from './Dropdown';
 import { useAuthState } from '../context/AuthContext';
 import { useOrganisationState } from '../context/OrganisationContext';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { api } from '../client/trpc';
 
 export const Header = () => {
   const router = useRouter();
   const { authData } = useAuthState();
   const { selectedOrganisation, setSelectedOrganisation } =
     useOrganisationState();
-
-  useEffect(() => {
-    api.accountRouter.getInfo.query().then((value) => {
-      if (value.currentOrganisation) {
-        setSelectedOrganisation?.(value.currentOrganisation);
-      }
-    });
-  }, [
-    authData.account.organisationMember,
-    authData.currentOrganisation?.code,
-    setSelectedOrganisation,
-  ]);
 
   return (
     <div
