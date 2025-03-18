@@ -12,7 +12,7 @@ export const AuthRedirector = () => {
     if (!authData.account?.id) {
       router.push('/sign-in');
     } else if (!authData.account?.organisationMember.length) {
-      router.push('/organisation/create');
+      router.push('/organisations/create');
     }
   }, [authData, router]);
 

@@ -23,7 +23,7 @@ export const Header = () => {
       <Dropdown
         onClick={(data) => {
           if (data.value === '_create_') {
-            router.push('/organisation/create');
+            router.push('/organisations/create');
             return;
           }
 
