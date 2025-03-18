@@ -18,6 +18,7 @@ export const organisationRouter = trpcRouter({
           code: replaceSpaceWithHypens(input.name),
           organisationMember: {
             create: {
+              role: 'owner',
               account: {
                 connect: {
                   id: auth.account.id,
@@ -43,4 +44,48 @@ export const organisationRouter = trpcRouter({
         Cookie.setCookieValue('organisation', input.code)
       );
     }),
+
+  addMember: trpcProcedure
+    .input(
+      z.object({
+        email: z.string().email(),
+        password: z.string(),
+      })
+    )
+    .mutation(async ({ input, ctx: { prisma, getAuth } }) => {
+      const auth = await getAuth();
+      const account = await prisma.account.create({
+        data: {
+          email: input.email,
+          password: input.password,
+          organisationMember: {
+            create: {
+              role: 'member',
+              organisation: {
+                connect: {
+                  id: auth.currentOrganisation.id,
+                },
+              },
+            },
+          },
+        },
+        omit: {
+          password: true,
+        },
+      });
+      return account;
+    }),
+
+  getMembers: trpcProcedure.query(async ({ ctx: { prisma, getAuth } }) => {
+    const auth = await getAuth();
+    const response = await prisma.organisationMember.findMany({
+      where: {
+        organisationId: auth.currentOrganisation.id,
+      },
+      include: {
+        account: true,
+      },
+    });
+    return response;
+  }),
 });

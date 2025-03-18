@@ -1,11 +1,10 @@
 'use client';
 
-import { Organisation } from '@prisma/client';
+import { Account, Organisation } from '@prisma/client';
 import {
   createContext,
   FC,
   ReactNode,
-  useCallback,
   useContext,
   useEffect,
   useState,
@@ -16,6 +15,8 @@ import { useAuthState } from './AuthContext';
 const OrganisationContext = createContext<{
   selectedOrganisation?: Organisation;
   setSelectedOrganisation?: (org: Organisation) => void;
+  members?: Account[];
+  reload?: () => Promise<void>;
 }>({});
 
 export const OrganisationProvider: FC<{ children: ReactNode }> = ({
@@ -24,22 +25,31 @@ export const OrganisationProvider: FC<{ children: ReactNode }> = ({
   const { setAuthData } = useAuthState();
   const [selectedOrganisation, _setSelectedOrganisation] =
     useState<Organisation>();
+  const [members, setMembers] = useState<Account[]>([]);
 
-  const setSelectedOrganisation = useCallback(
-    (org: Organisation) => {
-      api.organisationRouter.setOrganisation
-        .query({ code: org.code })
-        .then(() => {
-          api.accountRouter.getInfo.query().then((data) => {
-            if (data.currentOrganisation) {
-              _setSelectedOrganisation(data.currentOrganisation);
-              setAuthData(data);
-            }
-          });
-        });
-    },
-    [setAuthData]
-  );
+  const setSelectedOrganisation = (org: Organisation) => {
+    api.organisationRouter.setOrganisation
+      .query({ code: org.code })
+      .then(reload);
+  };
+
+  const reload = async () => {
+    try {
+      const [data, members] = await Promise.all([
+        api.accountRouter.getInfo.query(),
+        api.organisationRouter.getMembers.query(),
+      ]);
+
+      if (data.currentOrganisation) {
+        _setSelectedOrganisation(data.currentOrganisation);
+        setAuthData(data);
+      }
+
+      setMembers(members.map((member) => member.account));
+    } catch (error) {
+      console.error('Error reloading data:', error);
+    }
+  };
 
   useEffect(() => {
     api.accountRouter.getInfo.query().then((data) => {
@@ -53,7 +63,12 @@ export const OrganisationProvider: FC<{ children: ReactNode }> = ({
 
   return (
     <OrganisationContext.Provider
-      value={{ selectedOrganisation, setSelectedOrganisation }}
+      value={{
+        selectedOrganisation,
+        setSelectedOrganisation,
+        members,
+        reload,
+      }}
     >
       {children}
     </OrganisationContext.Provider>
