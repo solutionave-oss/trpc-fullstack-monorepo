@@ -40,7 +40,7 @@ export const accountRouter = trpcRouter({
       return { token };
     }),
   getInfo: trpcProcedure.query(async ({ ctx }) => {
-    const account = await ctx.getAuth();
-    return account;
+    const auth = await ctx.getAuth();
+    return auth;
   }),
 });

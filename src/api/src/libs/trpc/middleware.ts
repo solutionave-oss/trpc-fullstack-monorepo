@@ -39,7 +39,7 @@ export const getAuth = (
   }
 
   return async () => {
-    const [organisation, account] = await Promise.all([
+    const [currentOrganisation, account] = await Promise.all([
       prisma.organisation.findUnique({
         where: {
           code: organisationCode,
@@ -62,6 +62,6 @@ export const getAuth = (
     if (!account) {
       throw new Error('No User Found');
     }
-    return { account, organisation };
+    return { account, currentOrganisation };
   };
 };

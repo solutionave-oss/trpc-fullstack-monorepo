@@ -6,6 +6,7 @@ import { useAuthState } from '../context/AuthContext';
 import { useOrganisationState } from '../context/OrganisationContext';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { api } from '../client/trpc';
 
 export const Header = () => {
   const router = useRouter();
@@ -14,20 +15,14 @@ export const Header = () => {
     useOrganisationState();
 
   useEffect(() => {
-    const organisations = authData.account.organisationMember.map(
-      (orgmem) => orgmem.organisation
-    );
-
-    const preSelectedOrg = organisations.find(
-      (org) => org.code === authData.organisation?.code
-    );
-
-    if (preSelectedOrg) {
-      setSelectedOrganisation?.(preSelectedOrg);
-    }
+    api.accountRouter.getInfo.query().then((value) => {
+      if (value.currentOrganisation) {
+        setSelectedOrganisation?.(value.currentOrganisation);
+      }
+    });
   }, [
     authData.account.organisationMember,
-    authData.organisation?.code,
+    authData.currentOrganisation?.code,
     setSelectedOrganisation,
   ]);
 

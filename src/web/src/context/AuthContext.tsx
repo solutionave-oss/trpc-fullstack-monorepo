@@ -20,7 +20,7 @@ export const initialState = (): {
       id: '',
       organisationMember: [],
     },
-    organisation: {
+    currentOrganisation: {
       id: '',
       code: '',
       name: '',

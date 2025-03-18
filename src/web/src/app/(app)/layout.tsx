@@ -11,7 +11,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
       id: '',
       organisationMember: [],
     },
-    organisation: {
+    currentOrganisation: {
       id: '',
       code: '',
       name: '',
