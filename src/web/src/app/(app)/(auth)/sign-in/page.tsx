@@ -37,6 +37,8 @@ export default function SignIn() {
         router.push('/');
       }
     } catch (_error) {
+      console.log(_error);
+      
       const error = _error as { message: string };
       notify(error.message ?? 'Something went wrong');
     }

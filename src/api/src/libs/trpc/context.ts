@@ -2,7 +2,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import { getPrisma } from '../prisma';
 import { JWT } from '../jwt';
 import { Cookie } from '../cookie';
-import { getAuth } from './middleware';
+import { getAuth as _getAuth } from './middleware';
 
 export const createContext = ({
   req,
@@ -12,6 +12,7 @@ export const createContext = ({
   res: ServerResponse<IncomingMessage>;
 }) => {
   const prisma = getPrisma();
+  const getAuth = _getAuth(req, res, prisma);
 
   return {
     req,
@@ -19,7 +20,7 @@ export const createContext = ({
     prisma,
     JWT,
     Cookie,
-    getAuth: getAuth(req, res, prisma),
+    getAuth,
   };
 };
 

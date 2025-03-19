@@ -25,9 +25,10 @@ export const getAuth = (
   res: ServerResponse<IncomingMessage>,
   prisma: PrismaClient
 ) => {
-  const id = Cookie.getAuthUserId(req, res)['id'];
+  const id = Cookie.getAuthUserId(req, res)?.['id'];
+
   const organisationCode =
-    Cookie.getCookieValue(req.headers.cookie)['organisation'] ?? '';
+    Cookie.getCookieValue(req.headers.cookie)?.['organisation'] ?? '';
 
   if (isOpenRoute(req)) {
     Cookie.resetCookie(res);

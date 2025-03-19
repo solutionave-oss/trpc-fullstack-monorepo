@@ -74,6 +74,6 @@ export class Cookie {
   };
 
   static getCookieValue = (headers: string) => {
-    return cookie.parse(headers);
+    return cookie.parse(headers ?? '');
   };
 }
