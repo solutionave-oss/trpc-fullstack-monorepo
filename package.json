@@ -5,7 +5,9 @@
   "scripts": {
     "web": "nx dev web",
     "api": "nx serve api",
-    "dbreset": "prisma migrate reset --force && prisma db push"
+    "dbreset": "prisma migrate reset --force && prisma db push",
+    "dbpush": "prisma db push",
+    "dbstudio": "prisma studio"
   },
   "private": true,
   "dependencies": {

@@ -38,8 +38,8 @@ export default function Index() {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-1 w-[250pt]"
       >
-        <input {...register('email')} type="email" />
-        <input {...register('password')} type="text" />
+        <input {...register('email')} type="email" placeholder="Email" />
+        <input {...register('password')} type="text" placeholder="Password" />
         <button type="submit">Add User</button>
       </form>
     </div>

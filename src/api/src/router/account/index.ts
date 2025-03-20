@@ -43,4 +43,7 @@ export const accountRouter = trpcRouter({
     const auth = await ctx.getAuth();
     return auth;
   }),
+  signOut: trpcProcedure.query(async ({ ctx }) => {
+    ctx.Cookie.clearAllCookies(ctx.req, ctx.res);
+  }),
 });

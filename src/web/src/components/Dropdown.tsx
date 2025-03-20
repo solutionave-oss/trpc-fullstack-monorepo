@@ -4,13 +4,17 @@ import { FC, useState } from 'react';
 import { FiChevronDown } from 'react-icons/fi';
 import clsx from 'clsx';
 
-type OptionType = { label: string; value: string };
+type OptionType<T extends string> = { label: string; value: T };
 
-export const Dropdown: FC<{
+export const Dropdown = <T extends string>({
+  children,
+  options,
+  onClick,
+}: {
   children: string;
-  options: OptionType[];
-  onClick: (data: OptionType) => void;
-}> = ({ children, options, onClick }) => {
+  options: OptionType<T>[];
+  onClick: (data: OptionType<T>) => void;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -29,11 +33,11 @@ export const Dropdown: FC<{
       {isOpen && (
         <div
           className={clsx(
-            'absolute left-0 mt-2 w-40 bg-white border rounded-lg shadow-md',
-            'flex flex-col py-0.5'
+            'absolute left-0 mt-1 w-40 bg-white border rounded-lg shadow-md',
+            'flex flex-col py-0.5 z-10'
           )}
         >
-          {options?.map((opt) => (
+          {options.map((opt) => (
             <button
               key={opt.value}
               className={clsx(
@@ -42,7 +46,7 @@ export const Dropdown: FC<{
               )}
               onClick={() => {
                 onClick(opt);
-                setIsOpen?.((isOpen) => !isOpen);
+                setIsOpen(false);
               }}
             >
               {opt.label}

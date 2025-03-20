@@ -36,20 +36,19 @@ export default function Index() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className={clsx(
-        'h-full flex flex-col items-center',
-        'justify-center text-center'
-      )}
-    >
-      <div>New Organisation</div>
-      <input
-        {...register('name')}
-        type="text"
-        placeholder="Organisation Name"
-      />
-      <button type="submit">Create</button>
-    </form>
+    <div className="flex">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={clsx('flex flex-col gap-1')}
+      >
+        <div>New Organisation</div>
+        <input
+          {...register('name')}
+          type="text"
+          placeholder="Organisation Name"
+        />
+        <button type="submit">Create</button>
+      </form>
+    </div>
   );
 }

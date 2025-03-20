@@ -27,7 +27,7 @@ export class Cookie {
     res.setHeader(
       'Set-Cookie',
       cookie.serialize('token', '', {
-        maxAge: 60 * 60 * 24,
+        maxAge: 0,
         domain: '.localhost',
         path: '/',
         sameSite: 'lax',
@@ -75,5 +75,26 @@ export class Cookie {
 
   static getCookieValue = (headers: string) => {
     return cookie.parse(headers ?? '');
+  };
+
+  static clearAllCookies = (
+    req: IncomingMessage,
+    res: ServerResponse<IncomingMessage>
+  ) => {
+    const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
+
+    const expiredCookies = Object.keys(cookies).map((key) =>
+      cookie.serialize(key, '', {
+        maxAge: 0,
+        domain: '.localhost',
+        path: '/',
+        sameSite: 'lax',
+        priority: 'high',
+        httpOnly: true,
+        secure: false,
+      })
+    );
+
+    res.setHeader('Set-Cookie', expiredCookies);
   };
 }

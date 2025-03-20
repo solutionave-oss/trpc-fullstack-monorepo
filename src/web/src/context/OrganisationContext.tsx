@@ -15,7 +15,7 @@ import { useAuthState } from './AuthContext';
 const OrganisationContext = createContext<{
   selectedOrganisation?: Organisation;
   setSelectedOrganisation?: (org: Organisation) => void;
-  members?: Account[];
+  members?: Awaited<ReturnType<typeof api.organisationRouter.getMembers.query>>;
   reload?: () => Promise<void>;
 }>({});
 
@@ -25,7 +25,9 @@ export const OrganisationProvider: FC<{ children: ReactNode }> = ({
   const { setAuthData } = useAuthState();
   const [selectedOrganisation, _setSelectedOrganisation] =
     useState<Organisation>();
-  const [members, setMembers] = useState<Account[]>([]);
+  const [members, setMembers] = useState<
+    Awaited<ReturnType<typeof api.organisationRouter.getMembers.query>>
+  >([]);
 
   const setSelectedOrganisation = (org: Organisation) => {
     api.organisationRouter.setOrganisation
@@ -45,7 +47,7 @@ export const OrganisationProvider: FC<{ children: ReactNode }> = ({
         setAuthData(data);
       }
 
-      setMembers(members.map((member) => member.account));
+      setMembers(members);
     } catch (error) {
       console.error('Error reloading data:', error);
     }

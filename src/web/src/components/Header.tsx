@@ -5,12 +5,19 @@ import { Dropdown } from './Dropdown';
 import { useAuthState } from '../context/AuthContext';
 import { useOrganisationState } from '../context/OrganisationContext';
 import { useRouter } from 'next/navigation';
+import { api } from '../client/trpc';
 
 export const Header = () => {
   const router = useRouter();
   const { authData } = useAuthState();
   const { selectedOrganisation, setSelectedOrganisation } =
     useOrganisationState();
+
+  const onSignout = () => {
+    api.accountRouter.signOut.query().then(() => {
+      router.push('/sign-in');
+    });
+  };
 
   return (
     <div
@@ -43,6 +50,8 @@ export const Header = () => {
       >
         {selectedOrganisation?.name ?? 'Select Organisation'}
       </Dropdown>
+      <div className="flex-1" />
+      <button onClick={onSignout}>Sign out</button>
     </div>
   );
 };
