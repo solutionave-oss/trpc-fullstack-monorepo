@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { api } from 'src/web/src/client/trpc';
+import { Dropdown } from 'src/web/src/components/Dropdown';
 
 export default function Index() {
   const [projects, setProjects] =
@@ -18,7 +19,54 @@ export default function Index() {
   return (
     <div>
       <div>Projects</div>
-      <pre>{JSON.stringify(projects, null, 2)}</pre>
+      <table>
+        <thead>
+          <tr>
+            <th className="text-start border px-3">Id</th>
+            <th className="text-start border px-3">Name</th>
+            <th className="text-start border px-3">Start Date</th>
+            <th className="text-start border px-3">End Date</th>
+            <th className="text-start border px-3">Status</th>
+            <th className="text-start border px-3" />
+          </tr>
+        </thead>
+        <tbody>
+          {projects?.map((project) => (
+            <tr key={project.id}>
+              <td className="text-start border py-0.5 px-3">{project.id}</td>
+              <td className="text-start border py-0.5 px-3">{project.name}</td>
+              <td className="text-start border py-0.5 px-3">
+                {project.startDate}
+              </td>
+              <td className="text-start border py-0.5 px-3">
+                {project.endDate}
+              </td>
+              <td className="text-start border py-0.5 px-3">
+                {project.status}
+              </td>
+              <td className="text-start border py-0.5 px-3">
+                <Dropdown
+                  onClick={(data) => {
+                    switch (data.value) {
+                      case '_delete':
+                        alert('Delete');
+                        break;
+                      case '_update':
+                        alert('Update');
+                    }
+                  }}
+                  options={[
+                    { value: '_update', label: 'Update' },
+                    { value: '_delete', label: 'Delete' },
+                  ]}
+                >
+                  Actions
+                </Dropdown>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
