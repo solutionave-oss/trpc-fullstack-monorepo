@@ -23,6 +23,7 @@ model Organisation {
   name               String
   code               String               @unique
   organisationMember OrganisationMember[]
+  Project            Project[]
 }
 
 enum OrganisationRole {
@@ -56,15 +57,17 @@ enum ProjectStatus {
 }
 
 model Project {
-  id           String         @id @default(cuid())
-  name         String
-  startDate    DateTime       @default(now())
-  endDate      DateTime?
-  status       ProjectStatus  @default(scoping)
-  repositories VCS[]
-  projectBoard ProjectBoard[]
-  milestones   Milestone[]
-  StakeHolders StakeHolder[]
+  id             String         @id @default(cuid())
+  name           String
+  startDate      DateTime       @default(now())
+  endDate        DateTime?
+  status         ProjectStatus  @default(scoping)
+  repositories   VCS[]
+  projectBoard   ProjectBoard[]
+  milestones     Milestone[]
+  stakeHolders   StakeHolder[]
+  organisation   Organisation   @relation(fields: [organisationId], references: [id])
+  organisationId String
 
   @@index([status])
 }
@@ -80,13 +83,13 @@ enum StakeHolderRoles {
 }
 
 model StakeHolder {
-  member    Account          @relation(fields: [accountId], references: [id])
-  accountId String
+  member    Account          @relation(fields: [memberId], references: [id])
+  memberId  String
   project   Project          @relation(fields: [projectId], references: [id])
   projectId String
   role      StakeHolderRoles @default(developer)
 
-  @@id([accountId, projectId])
+  @@id([memberId, projectId])
 }
 
 model VCS {
