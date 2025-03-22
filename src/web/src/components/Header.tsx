@@ -51,7 +51,24 @@ export const Header = () => {
         {selectedOrganisation?.name ?? 'Select Organisation'}
       </Dropdown>
       <div className="flex-1" />
-      <button onClick={onSignout}>Sign out</button>
+      <Dropdown
+        options={[
+          { label: 'Account', value: 'account' },
+          { label: 'Sign out', value: 'signout' },
+        ]}
+        onClick={(data) => {
+          switch (data.value) {
+            case 'account':
+              router.push('/account');
+              break;
+            case 'signout':
+              onSignout();
+              break;
+          }
+        }}
+      >
+        {authData.account.email}
+      </Dropdown>
     </div>
   );
 };

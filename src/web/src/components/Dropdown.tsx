@@ -23,7 +23,7 @@ export const Dropdown = <T extends string>({
         onClick={() => setIsOpen(!isOpen)}
         className={clsx(
           'flex items-center gap-1 px-3 py-0.5 bg-white border rounded-lg',
-          'shadow-sm hover:bg-gray-50 transition text-sm capitalize'
+          'shadow-sm hover:bg-gray-50 transition text-sm'
         )}
       >
         {children}
