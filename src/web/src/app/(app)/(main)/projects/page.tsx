@@ -1,5 +1,7 @@
 'use client';
 
+import clsx from 'clsx';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { api } from 'src/web/src/client/trpc';
 import { Dropdown } from 'src/web/src/components/Dropdown';
@@ -18,7 +20,7 @@ export default function Index() {
 
   return (
     <div>
-      <div>Projects</div>
+      <div className="mb-2">Projects</div>
       <table>
         <thead>
           <tr>
@@ -34,7 +36,14 @@ export default function Index() {
           {projects?.map((project) => (
             <tr key={project.id}>
               <td className="text-start border py-0.5 px-3">{project.id}</td>
-              <td className="text-start border py-0.5 px-3">{project.name}</td>
+              <td className={clsx('text-start border py-0.5 px-3 select-none')}>
+                <Link
+                  href={`/projects/${project.id}`}
+                  className="text-blue-600 hover:underline cursor-pointer active:text-indigo-600"
+                >
+                  {project.name}
+                </Link>
+              </td>
               <td className="text-start border py-0.5 px-3">
                 {project.startDate}
               </td>

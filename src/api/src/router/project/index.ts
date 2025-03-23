@@ -58,4 +58,23 @@ export const projectRouter = trpcRouter({
 
     return projects;
   }),
+  getProject: trpcProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(async ({ input, ctx: { getAuth, prisma } }) => {
+      await getAuth();
+      const project = await prisma.project.findUnique({
+        where: { id: input.id },
+        include: {
+          milestones: true,
+          projectBoard: true,
+          repositories: true,
+          stakeHolders: true,
+        },
+      });
+      return project;
+    }),
 });
