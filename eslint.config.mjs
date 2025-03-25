@@ -1,9 +1,13 @@
 import js from "@eslint/js";
-import { defineConfig } from "eslint/config";
 import importPlugin from "eslint-plugin-import";
+import jsxA11y from "eslint-plugin-jsx-a11y";
+import react from "eslint-plugin-react";
+import reactHooks from "eslint-plugin-react-hooks";
 import tailwindcss from "eslint-plugin-tailwindcss";
+import { defineConfig } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
+
 
 export default defineConfig([
   tseslint.configs.recommended,
@@ -17,31 +21,34 @@ export default defineConfig([
     },
     plugins: {
       js,
-      import: importPlugin, 
+      import: importPlugin,
       "@typescript-eslint": tseslint.plugin,
-      tailwindcss
+      tailwindcss,
+      "react-hooks": reactHooks,
+      react,
+      "jsx-a11y": jsxA11y,
     },
     rules: {
       "tailwindcss/no-custom-classname": "off",
-      
+
       eqeqeq: "error",
-      
-      "no-unused-vars": "off", 
+
+      "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": ["error", {
-        vars: "all", args: "after-used", "argsIgnorePattern": "^_" 
+        vars: "all", args: "after-used", "argsIgnorePattern": "^_"
       }],
 
       "no-undef": "error",
       semi: "error",
       "prefer-const": "error",
-      
+
       "no-multiple-empty-lines": ["error", {
-        max: 1, maxEOF: 0 
+        max: 1, maxEOF: 0
       }],
-      
+
       "no-empty": "error",
       "@typescript-eslint/no-empty-function": ["error", {
-        allow: [] 
+        allow: []
       }],
       "no-restricted-syntax": [
         "error",
@@ -50,43 +57,68 @@ export default defineConfig([
           "message": "Empty objects are not allowed."
         }
       ],
-      
+
       "object-curly-spacing": ["error", "always"],
       "object-curly-newline": ["error", {
         ObjectExpression: {
-          minProperties: 1, consistent: true 
-        } 
+          minProperties: 1, consistent: true
+        }
       }],
       "no-whitespace-before-property": "error",
       "indent": ["error", 2, {
-        SwitchCase: 1 
+        SwitchCase: 1
       }],
       "brace-style": ["error", "1tbs", {
-        allowSingleLine: true 
+        allowSingleLine: true
       }],
-      
+
+      "arrow-parens": ["error", "always"],
+      "no-trailing-spaces": "error",
+      "newline-per-chained-call": ["error", {
+        "ignoreChainWithDepth": 2
+      }],
+      "no-console": ["warn", {
+        "allow": ["warn", "error"]
+      }],
+      "guard-for-in": "error",
+      "no-unused-expressions": "error",
+      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }],
+      "@typescript-eslint/consistent-type-imports": "error",
+      "@typescript-eslint/no-unnecessary-type-assertion": "error",
+      "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
+      "react-hooks/exhaustive-deps": "error",
+      "react/no-danger": "error",
+      "react/jsx-curly-spacing": ["error", { "when": "always", "children": true }],
+      "jsx-a11y/anchor-is-valid": "error",
+      "no-shadow": "error",
+      "no-cond-assign": ["error", "always"],
+      "no-param-reassign": ["error", { "props": true }],
+      "yoda": ["error", "never"],
+
+
       "import/order": [
         "error",
         {
           groups: ["builtin", "external", "internal", ["parent", "sibling"], "index"],
           pathGroups: [
             {
-              pattern: "app/**", group: "internal" 
+              pattern: "app/**", group: "internal"
             },
             {
-              pattern: "apollo/**", group: "internal" 
+              pattern: "apollo/**", group: "internal"
             },
             {
-              pattern: "components/**", group: "internal" 
+              pattern: "components/**", group: "internal"
             },
             {
-              pattern: "lib/**", group: "internal" 
+              pattern: "lib/**", group: "internal"
             }
           ],
           pathGroupsExcludedImportTypes: [],
           "newlines-between": "always",
           alphabetize: {
-            order: "asc", caseInsensitive: true 
+            order: "asc", caseInsensitive: true
           }
         }
       ]
