@@ -22,6 +22,8 @@ export default defineConfig([
       "no-undef": "error",
       semi: "error",
       "prefer-const": "error",
+
+      "no-multiple-empty-lines": ["error", { max: 1, maxEOF: 0 }],
     },
   },
 ]);
