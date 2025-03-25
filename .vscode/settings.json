@@ -1,10 +1,13 @@
 {
-  "eslint.format.enable": true,
-  "eslint.codeActionsOnSave.mode": "all",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always"
+    "source.fixAll.eslint": "always",
+    "source.organizeImports": "always"
   },
-  "eslint.validate": ["javascript", "typescript"],
-  "eslint.run": "onSave",
+  "eslint.rules.customizations": [
+    {
+      "rule": "no-unused-vars",
+      "severity": "error"
+    }
+  ],
   "editor.formatOnSave": true
 }
