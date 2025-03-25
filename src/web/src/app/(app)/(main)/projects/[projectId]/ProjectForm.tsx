@@ -1,8 +1,12 @@
+// MAKE IT RESIDE IN `layout.tsx`
+
 'use client';
 
 import clsx from 'clsx';
 import { useState } from 'react';
 import { api } from 'src/web/src/client/trpc';
+import { ProjectInformation } from './ProjectInformation';
+import { Stakeholders } from './Stakeholders';
 
 export const ProjectForm = (
   project: Awaited<ReturnType<typeof api.projectRouter.getProject.query>>
@@ -55,11 +59,14 @@ export const ProjectForm = (
   };
 
   const TabView = ({ tab }: { tab: typeof activateTab }) => {
+    if (!project) {
+      return <div>No Project Found</div>;
+    }
     switch (tab) {
       case 'Project':
-        return <div>Project Information</div>;
+        return <ProjectInformation {...project} />;
       case 'Stakeholder':
-        return <div>Stake holders</div>;
+        return <Stakeholders {...project} />;
       case 'Boards':
         return <div>Boards</div>;
       case 'Tickets':
