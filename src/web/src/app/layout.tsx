@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import "./global.css";
 import { ToastContainer } from "react-toastify";
 
@@ -9,11 +10,18 @@ export const metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode
 }) {
+
+  
+
   return (
     <html lang="en">
       <body>
+
+
+
+        
         {children}
         <ToastContainer />
       </body>
