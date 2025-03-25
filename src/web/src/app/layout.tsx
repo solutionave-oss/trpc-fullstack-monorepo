@@ -1,9 +1,9 @@
-import './global.css';
-import { ToastContainer } from 'react-toastify';
+import "./global.css";
+import { ToastContainer } from "react-toastify";
 
 export const metadata = {
-  title: 'Aiobisoft',
-  description: 'Your Technology Partner',
+  title: "Aiobisoft",
+  description: "Your Technology Partner",
 };
 
 export default function RootLayout({
