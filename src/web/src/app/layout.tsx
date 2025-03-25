@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import "./global.css";
 import { ToastContainer } from "react-toastify";
+import "./global.css";
 
 export const metadata = {
   title: "Aiobisoft",
@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        
+
         {children}
         <ToastContainer />
       </body>
