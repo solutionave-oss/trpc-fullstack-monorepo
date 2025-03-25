@@ -1,6 +1,6 @@
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
-import { type AppRouter } from 'src/api/src/router/index';
 import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies';
+import { type AppRouter } from 'src/api/src/router/index';
 
 const url = 'http://localhost:4000';
 
@@ -9,7 +9,9 @@ export const api = createTRPCProxyClient<AppRouter>({
     httpBatchLink({
       url,
       fetch: (url, options) =>
-        fetch(url, { ...options, credentials: 'include' }),
+        fetch(url, {
+          ...options, credentials: 'include' 
+        }),
     }),
   ],
 });

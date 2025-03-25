@@ -25,8 +25,12 @@ const SIDEBAR: {
   {
     section: 'Organisation',
     links: [
-      { label: 'My Organisations', href: '/organisations' },
-      { label: 'Create Organisations', href: '/organisations/create' },
+      {
+        label: 'My Organisations', href: '/organisations' 
+      },
+      {
+        label: 'Create Organisations', href: '/organisations/create' 
+      },
     ],
   },
   {

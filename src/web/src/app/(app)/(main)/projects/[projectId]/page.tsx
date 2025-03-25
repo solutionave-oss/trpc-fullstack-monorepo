@@ -1,3 +1,3 @@
 export default function Index() {
-  return <div>Project Page</div>
+  return <div>Project Page</div>;
 }

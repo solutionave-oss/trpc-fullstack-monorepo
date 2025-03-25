@@ -1,6 +1,6 @@
 'use client';
 
-import { Account, Organisation } from '@prisma/client';
+import { Organisation } from '@prisma/client';
 import {
   createContext,
   FC,
@@ -9,15 +9,20 @@ import {
   useEffect,
   useState,
 } from 'react';
-import { api } from '../client/trpc';
+
 import { useAuthState } from './AuthContext';
+import { api } from '../client/trpc';
 
 const OrganisationContext = createContext<{
   selectedOrganisation?: Organisation;
   setSelectedOrganisation?: (org: Organisation) => void;
   members?: Awaited<ReturnType<typeof api.organisationRouter.getMembers.query>>;
   reload?: () => Promise<void>;
-}>({});
+    }>({
+      reload: async ()=>{
+        return new Promise((resolve) => resolve());
+      },
+    });
 
 export const OrganisationProvider: FC<{ children: ReactNode }> = ({
   children,
@@ -31,7 +36,9 @@ export const OrganisationProvider: FC<{ children: ReactNode }> = ({
 
   const setSelectedOrganisation = (org: Organisation) => {
     api.organisationRouter.setOrganisation
-      .query({ code: org.code })
+      .query({
+        code: org.code 
+      })
       .then(reload);
   };
 
@@ -60,7 +67,6 @@ export const OrganisationProvider: FC<{ children: ReactNode }> = ({
         setSelectedOrganisation(data.currentOrganisation);
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

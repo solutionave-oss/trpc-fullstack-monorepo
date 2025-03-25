@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useAuthState } from '../context/AuthContext';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
+import { useAuthState } from '../context/AuthContext';
 
 export const AuthRedirector = () => {
   const { authData } = useAuthState();

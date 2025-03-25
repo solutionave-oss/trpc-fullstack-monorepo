@@ -1,7 +1,8 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { getPrisma } from '../prisma';
-import { JWT } from '../jwt';
+
 import { Cookie } from '../cookie';
+import { JWT } from '../jwt';
+import { getPrisma } from '../prisma';
 import { getAuth as _getAuth } from './middleware';
 
 export const createContext = ({

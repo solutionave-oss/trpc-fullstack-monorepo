@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, FC, ReactNode, useContext, useState } from 'react';
+
 import { api } from '../client/trpc';
 
 type StateType = Awaited<ReturnType<typeof api.accountRouter.getInfo.query>>;
@@ -26,7 +27,7 @@ export const initialState = (): {
       name: '',
     },
   },
-  setAuthData(data: StateType) {
+  setAuthData(_: StateType) {
     //
   },
 });
@@ -45,7 +46,9 @@ export const AuthProvider: FC<{
   const setAuthData = (data: typeof authData) => _setAuthData(data);
 
   return (
-    <AuthContext.Provider value={{ setAuthData, authData }}>
+    <AuthContext.Provider value={{
+      setAuthData, authData 
+    }}>
       {children}
     </AuthContext.Provider>
   );
@@ -53,5 +56,7 @@ export const AuthProvider: FC<{
 
 export const useAuthState = () => {
   const { authData, setAuthData } = useContext(AuthContext);
-  return { authData, setAuthData };
+  return {
+    authData, setAuthData 
+  };
 };

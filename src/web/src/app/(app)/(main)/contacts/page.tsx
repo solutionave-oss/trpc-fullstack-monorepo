@@ -36,8 +36,12 @@ export default function Index() {
                     }
                   }}
                   options={[
-                    { value: '_update', label: 'Update' },
-                    { value: '_delete', label: 'Delete' },
+                    {
+                      value: '_update', label: 'Update' 
+                    },
+                    {
+                      value: '_delete', label: 'Delete' 
+                    },
                   ]}
                 >
                   Actions

@@ -1,8 +1,8 @@
 'use client';
 
-import { FC, useState } from 'react';
-import { FiChevronDown } from 'react-icons/fi';
 import clsx from 'clsx';
+import { useState } from 'react';
+import { FiChevronDown } from 'react-icons/fi';
 
 type OptionType<T extends string> = { label: string; value: T };
 

@@ -1,11 +1,15 @@
 import { IncomingMessage, ServerResponse } from 'http';
-import { Ctx } from './trpc/context';
+
 import * as cookie from 'cookie';
+
 import { JWT } from './jwt';
+import { Ctx } from './trpc/context';
 
 export class Cookie {
   static setToken = (ctx: Ctx, id: string) => {
-    const token = ctx.JWT.Sign({ id });
+    const token = ctx.JWT.Sign({
+      id 
+    });
 
     ctx.res.setHeader(
       'Set-Cookie',
@@ -20,7 +24,9 @@ export class Cookie {
       })
     );
 
-    return { token };
+    return {
+      token 
+    };
   };
 
   static resetCookie = (res: ServerResponse<IncomingMessage>) => {
@@ -43,20 +49,26 @@ export class Cookie {
     res: ServerResponse<IncomingMessage>
   ): ReturnType<typeof JWT.Decode> => {
     if (!req.headers.cookie) {
-      return { id: '' };
+      return {
+        id: '' 
+      };
     }
 
     const token = cookie.parse(req.headers.cookie)?.['token'];
 
     if (!token) {
-      return { id: '' };
+      return {
+        id: '' 
+      };
     }
 
     try {
       JWT.Verify(token);
     } catch {
       Cookie.resetCookie(res);
-      return { id: '' };
+      return {
+        id: '' 
+      };
     }
     return JWT.Decode(token);
   };
@@ -81,7 +93,7 @@ export class Cookie {
     req: IncomingMessage,
     res: ServerResponse<IncomingMessage>
   ) => {
-    const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : {};
+    const cookies = req.headers.cookie ? cookie.parse(req.headers.cookie) : req.headers.cookie;
 
     const expiredCookies = Object.keys(cookies).map((key) =>
       cookie.serialize(key, '', {

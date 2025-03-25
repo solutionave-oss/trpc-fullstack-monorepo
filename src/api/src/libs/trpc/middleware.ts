@@ -1,18 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import cors from 'cors';
+
+import { IncomingMessage, ServerResponse } from 'http';
+
+import { PrismaClient } from '@prisma/client';
 import {
   NodeHTTPRequest,
   NodeHTTPResponse,
 } from '@trpc/server/dist/adapters/node-http';
-import { PrismaClient } from '@prisma/client';
-import { IncomingMessage, ServerResponse } from 'http';
+import cors from 'cors';
+
 import { Cookie } from '../cookie';
 import { isOpenRoute } from '../guard';
 
 export const middleware = (
   req: NodeHTTPRequest,
   res: NodeHTTPResponse,
-  next: (err?: any) => any
+  next: (err?: unknown) => unknown
 ) => {
   return cors({
     credentials: true,
@@ -47,8 +49,12 @@ export const getAuth = (
         },
       }),
       prisma.account.findUnique({
-        where: { id },
-        omit: { password: true },
+        where: {
+          id 
+        },
+        omit: {
+          password: true 
+        },
         include: {
           organisationMember: {
             include: {
@@ -63,6 +69,9 @@ export const getAuth = (
     if (!account) {
       throw new Error('No User Found');
     }
-    return { account, currentOrganisation };
+    return {
+      account, currentOrganisation 
+    };
   };
+  
 };

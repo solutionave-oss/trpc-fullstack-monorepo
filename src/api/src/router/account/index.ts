@@ -1,5 +1,6 @@
-import { object, string } from 'zod';
-import { trpcProcedure, trpcRouter } from '../../libs/trpc';
+import { object, string } from "zod";
+
+import { trpcProcedure, trpcRouter } from "../../libs/trpc";
 
 export const accountRouter = trpcRouter({
   signIn: trpcProcedure
@@ -28,16 +29,20 @@ export const accountRouter = trpcRouter({
         });
 
         const { token } = ctx.Cookie.setToken(ctx, account.id);
-        return { token };
+        return {
+          token 
+        };
       }
 
       if (input.password !== existing.password) {
         ctx.Cookie.resetCookie(ctx.res);
-        throw new Error('Invalid Password');
+        throw new Error("Invalid Password");
       }
 
       const { token } = ctx.Cookie.setToken(ctx, existing.id);
-      return { token };
+      return {
+        token 
+      };
     }),
   getInfo: trpcProcedure.query(async ({ ctx }) => {
     const auth = await ctx.getAuth();

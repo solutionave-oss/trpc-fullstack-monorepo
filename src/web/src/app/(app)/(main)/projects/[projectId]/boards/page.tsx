@@ -1,4 +1,4 @@
 
 export default function Index() {
-  return <div>Stakeholders</div>
+  return <div>Stakeholders</div>;
 }

@@ -1,6 +1,7 @@
+import * as z from 'zod';
+
 import { replaceSpaceWithHypens } from '../../libs/processors';
 import { trpcProcedure, trpcRouter } from '../../libs/trpc';
-import * as z from 'zod';
 
 export const organisationRouter = trpcRouter({
   registerOrganisation: trpcProcedure

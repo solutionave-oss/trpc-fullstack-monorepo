@@ -1,11 +1,12 @@
 'use client';
 
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
+
 import { Dropdown } from './Dropdown';
+import { api } from '../client/trpc';
 import { useAuthState } from '../context/AuthContext';
 import { useOrganisationState } from '../context/OrganisationContext';
-import { useRouter } from 'next/navigation';
-import { api } from '../client/trpc';
 
 export const Header = () => {
   const router = useRouter();
@@ -46,15 +47,21 @@ export const Header = () => {
             label: orgmem.organisation.name,
             value: orgmem.organisation.code,
           }))
-          .concat([{ label: 'Register New', value: '_create_' }])}
+          .concat([{
+            label: 'Register New', value: '_create_' 
+          }])}
       >
         {selectedOrganisation?.name ?? 'Select Organisation'}
       </Dropdown>
       <div className="flex-1" />
       <Dropdown
         options={[
-          { label: 'Account', value: 'account' },
-          { label: 'Sign out', value: 'signout' },
+          {
+            label: 'Account', value: 'account' 
+          },
+          {
+            label: 'Sign out', value: 'signout' 
+          },
         ]}
         onClick={(data) => {
           switch (data.value) {

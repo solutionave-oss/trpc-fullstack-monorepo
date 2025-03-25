@@ -9,7 +9,9 @@ export default defineConfig([
   {
     files: ["**/*.{js,mjs,cjs,ts,tsx}"],
     languageOptions: {
-      globals: { ...globals.browser, ...globals.node },
+      globals: {
+        ...globals.browser, ...globals.node 
+      },
     },
     plugins: {
       js,
@@ -18,13 +20,55 @@ export default defineConfig([
     },
     rules: {
       eqeqeq: "error",
-      "no-unused-vars": "error",
+
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "vars": "all", "args": "after-used", "argsIgnorePattern": "^_" 
+        }
+      ],
+
       "no-undef": "error",
       semi: "error",
       "prefer-const": "error",
 
-      "no-multiple-empty-lines": ["error", { max: 1, maxEOF: 0 }],
+      "no-multiple-empty-lines": ["error", {
+        max: 1, maxEOF: 0 
+      }],
       
+      "no-empty": "error",
+      "@typescript-eslint/no-empty-function": ["error", {
+        "allow": [] 
+      }],
+      "no-restricted-syntax": [
+        "error",
+        {
+          "selector": "ObjectExpression[properties.length=0]",
+          "message": "Empty objects are not allowed."
+        }
+      ],
+      "object-curly-spacing": ["error", "always"],
+      "object-curly-newline": ["error", {
+        "ObjectExpression": {
+          "minProperties": 1, "consistent": true 
+        } 
+      }],
+      "no-whitespace-before-property": "error",
+
+      "indent": ["error", 2, {
+        "SwitchCase": 1 
+      }],
+      "object-curly-newline": ["error", {
+        "ObjectExpression": {
+          "minProperties": 1, "consistent": true 
+        } 
+      }],
+      "no-whitespace-before-property": "error",
+      "brace-style": ["error", "1tbs", {
+        "allowSingleLine": true 
+      }],
+
       "import/order": [
         "error",
         {
@@ -36,14 +80,24 @@ export default defineConfig([
             "index",
           ],
           pathGroups: [
-            { pattern: "app/**", group: "internal" },
-            { pattern: "apollo/**", group: "internal" },
-            { pattern: "components/**", group: "internal" },
-            { pattern: "lib/**", group: "internal" },
+            {
+              pattern: "app/**", group: "internal" 
+            },
+            {
+              pattern: "apollo/**", group: "internal" 
+            },
+            {
+              pattern: "components/**", group: "internal" 
+            },
+            {
+              pattern: "lib/**", group: "internal" 
+            },
           ],
           pathGroupsExcludedImportTypes: [],
           "newlines-between": "always",
-          alphabetize: { order: "asc", caseInsensitive: true },
+          alphabetize: {
+            order: "asc", caseInsensitive: true 
+          },
         },
       ],
     },

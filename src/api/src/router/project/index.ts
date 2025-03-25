@@ -1,5 +1,6 @@
-import { trpcProcedure, trpcRouter } from '../../libs/trpc';
 import * as z from 'zod';
+
+import { trpcProcedure, trpcRouter } from '../../libs/trpc';
 
 export const projectRouter = trpcRouter({
   createProject: trpcProcedure
@@ -67,7 +68,9 @@ export const projectRouter = trpcRouter({
     .query(async ({ input, ctx: { getAuth, prisma } }) => {
       await getAuth();
       const project = await prisma.project.findUnique({
-        where: { id: input.id },
+        where: {
+          id: input.id 
+        },
         include: {
           milestones: true,
           projectBoard: true,
