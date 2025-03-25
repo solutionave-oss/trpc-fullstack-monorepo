@@ -1,13 +1,14 @@
 import js from "@eslint/js";
 import { defineConfig } from "eslint/config";
 import importPlugin from "eslint-plugin-import";
+import tailwindcss from "eslint-plugin-tailwindcss";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([
   tseslint.configs.recommended,
   {
-    files: ["**/*.{js,mjs,cjs,ts,tsx}"],
+    files: ["**/*.{js,mjs,cjs,ts,tsx,css}"],
     languageOptions: {
       globals: {
         ...globals.browser, ...globals.node 
@@ -17,8 +18,12 @@ export default defineConfig([
       js,
       import: importPlugin,
       "@typescript-eslint": tseslint.plugin,
+      tailwindcss
     },
     rules: {
+
+      "tailwindcss/no-custom-classname": "off",
+
       eqeqeq: "error",
 
       "no-unused-vars": "off",
