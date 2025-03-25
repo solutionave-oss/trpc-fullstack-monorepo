@@ -1,3 +1,4 @@
+
 export default function Index() {
-  return <div>Project Page</div>
+  return <div>Stakeholders</div>
 }
