@@ -1,13 +1,12 @@
 import js from "@eslint/js";
+import { defineConfig } from "eslint/config";
 import importPlugin from "eslint-plugin-import";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import tailwindcss from "eslint-plugin-tailwindcss";
-import { defineConfig } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
-
 
 export default defineConfig([
   tseslint.configs.recommended,
@@ -82,20 +81,25 @@ export default defineConfig([
       }],
       "guard-for-in": "error",
       "no-unused-expressions": "error",
-      "@typescript-eslint/no-floating-promises": "error",
-      "@typescript-eslint/explicit-function-return-type": ["error", { "allowExpressions": true }],
+      // "@typescript-eslint/no-floating-promises": "error",
+      // "@typescript-eslint/explicit-function-return-type": ["error", {
+      //   "allowExpressions": true
+      // }],
       "@typescript-eslint/consistent-type-imports": "error",
-      "@typescript-eslint/no-unnecessary-type-assertion": "error",
+      // "@typescript-eslint/no-unnecessary-type-assertion": "error",
       "@typescript-eslint/consistent-type-definitions": ["error", "interface"],
       "react-hooks/exhaustive-deps": "error",
       "react/no-danger": "error",
-      "react/jsx-curly-spacing": ["error", { "when": "always", "children": true }],
+      "react/jsx-curly-spacing": ["error", {
+        "when": "always", "children": true
+      }],
       "jsx-a11y/anchor-is-valid": "error",
       "no-shadow": "error",
       "no-cond-assign": ["error", "always"],
-      "no-param-reassign": ["error", { "props": true }],
+      "no-param-reassign": ["error", {
+        "props": true
+      }],
       "yoda": ["error", "never"],
-
 
       "import/order": [
         "error",

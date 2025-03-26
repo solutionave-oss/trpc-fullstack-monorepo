@@ -1,17 +1,19 @@
+"use client";
+
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { ReactNode } from "react";
 
 export default function Index({ children }:{children: ReactNode}) {
+  const params = useParams<{projectId: string}>();
   return <div>
     <div className="flex item-center gap-2">
-      <Link href={'/projects/abc'}>Project</Link>
-      <Link href={'/projects/abc/stakeholders'}>Stakeholders</Link>
-      <Link href={'/projects/abc/milestones'}>Milestones</Link>
-      <Link href={'/projects/abc/epics'}>Epics</Link>
-      <Link href={'/projects/abc/tickets'}>Tickets</Link>
+      <Link href={`/projects/${params.projectId}`}>Project</Link>
+      <Link href={`/projects/${params.projectId}/stakeholders`}>Stakeholders</Link>
+      <Link href={`/projects/${params.projectId}/milestones`}>Milestones</Link>
+      <Link href={`/projects/${params.projectId}/epics`}>Epics</Link>
+      <Link href={`/projects/${params.projectId}/tickets`}>Tickets</Link>
     </div>
-      
     <div>{children}</div>
-    
   </div>;
 }
