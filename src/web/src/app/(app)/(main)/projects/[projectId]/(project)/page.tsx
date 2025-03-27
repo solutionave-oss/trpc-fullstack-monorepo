@@ -26,7 +26,9 @@ export default function Index() {
   };
 
   return <div>
-    <form onSubmit={ handleSubmit(onSubmit) }></form>
+    <form onSubmit={ handleSubmit(onSubmit) }>
+      <input type="text" { ...register('name') } />
+    </form>
   </div>;
 }
 
