@@ -1,0 +1,13 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.organizeImports": "always"
+  },
+  "eslint.rules.customizations": [
+    {
+      "rule": "no-unused-vars",
+      "severity": "error"
+    }
+  ],
+  "editor.formatOnSave": true
+}

@@ -1,0 +1,89 @@
+'use client';
+
+import { Organisation } from '@prisma/client';
+import {
+  createContext,
+  FC,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+
+import { useAuthState } from './AuthContext';
+import { api } from '../client/trpc';
+
+const OrganisationContext = createContext<{
+  selectedOrganisation?: Organisation;
+  setSelectedOrganisation?: (org: Organisation) => void;
+  members?: Awaited<ReturnType<typeof api.organisationRouter.getMembers.query>>;
+  reload?: () => Promise<void>;
+    }>({
+      reload: async ()=>{
+        return new Promise((resolve) => resolve());
+      },
+    });
+
+export const OrganisationProvider: FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const { setAuthData } = useAuthState();
+  const [selectedOrganisation, _setSelectedOrganisation] =
+    useState<Organisation>();
+  const [members, setMembers] = useState<
+    Awaited<ReturnType<typeof api.organisationRouter.getMembers.query>>
+  >([]);
+
+  const setSelectedOrganisation = (org: Organisation) => {
+    api.organisationRouter.setOrganisation
+      .query({
+        code: org.code 
+      })
+      .then(reload);
+  };
+
+  const reload = async () => {
+    try {
+      const [data, members] = await Promise.all([
+        api.accountRouter.getInfo.query(),
+        api.organisationRouter.getMembers.query(),
+      ]);
+
+      if (data.currentOrganisation) {
+        _setSelectedOrganisation(data.currentOrganisation);
+        setAuthData(data);
+      }
+
+      setMembers(members);
+    } catch (error) {
+      console.error('Error reloading data:', error);
+    }
+  };
+
+  useEffect(() => {
+    api.accountRouter.getInfo.query().then((data) => {
+      if (data.currentOrganisation) {
+        setAuthData(data);
+        setSelectedOrganisation(data.currentOrganisation);
+      }
+    });
+  }, []);
+
+  return (
+    <OrganisationContext.Provider
+      value={{
+        selectedOrganisation,
+        setSelectedOrganisation,
+        members,
+        reload,
+      }}
+    >
+      {children}
+    </OrganisationContext.Provider>
+  );
+};
+
+export const useOrganisationState = () => {
+  const organisationState = useContext(OrganisationContext);
+  return organisationState;
+};

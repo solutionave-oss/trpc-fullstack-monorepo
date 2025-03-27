@@ -1,0 +1,32 @@
+import { cookies } from 'next/headers';
+import { ReactNode } from 'react';
+
+import { api, serverApi } from '../../client/trpc';
+import { AuthProvider } from '../../context/AuthContext';
+import { OrganisationProvider } from '../../context/OrganisationContext';
+
+export default async function Layout({ children }: { children: ReactNode }) {
+  let authData: Awaited<ReturnType<typeof api.accountRouter.getInfo.query>> = {
+    account: {
+      email: '',
+      id: '',
+      organisationMember: [],
+    },
+    currentOrganisation: {
+      id: '',
+      code: '',
+      name: '',
+    },
+  };
+
+  try {
+    authData = await serverApi(await cookies()).accountRouter.getInfo.query();
+  } catch {
+    //
+  }
+  return (
+    <AuthProvider authData={authData}>
+      <OrganisationProvider>{children}</OrganisationProvider>
+    </AuthProvider>
+  );
+}

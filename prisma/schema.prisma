@@ -1,0 +1,150 @@
+// This is your Prisma schema file,
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                 String               @id @default(cuid())
+  email              String               @unique
+  password           String
+  organisationMember OrganisationMember[]
+  stakeHolders       StakeHolder[]
+  Tracking           Tracking[]
+}
+
+model Organisation {
+  id                 String               @id @default(cuid())
+  name               String
+  code               String               @unique
+  organisationMember OrganisationMember[]
+  Project            Project[]
+}
+
+enum OrganisationRole {
+  owner
+  admin
+  member
+  viewer
+}
+
+model OrganisationMember {
+  account        Account          @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  accountId      String
+  organisation   Organisation     @relation(fields: [organisationId], references: [id], onDelete: Cascade)
+  organisationId String
+  role           OrganisationRole @default(viewer)
+
+  @@id([accountId, organisationId])
+  @@index([accountId])
+  @@index([organisationId])
+}
+
+enum ProjectStatus {
+  scoping
+  initiated
+  in_progress
+  awaiting_approval
+  blocked
+  requested_scope_change
+  closed
+  support
+}
+
+model Project {
+  id             String         @id @default(cuid())
+  name           String
+  startDate      DateTime       @default(now())
+  endDate        DateTime?
+  status         ProjectStatus  @default(scoping)
+  repositories   VCS[]
+  projectBoard   ProjectBoard[]
+  milestones     Milestone[]
+  stakeHolders   StakeHolder[]
+  organisation   Organisation   @relation(fields: [organisationId], references: [id])
+  organisationId String
+
+  @@index([status])
+}
+
+enum StakeHolderRoles {
+  owner
+  manager
+  developer
+  qa
+  sales
+  support
+  rnd
+}
+
+model StakeHolder {
+  member    Account          @relation(fields: [memberId], references: [id])
+  memberId  String
+  project   Project          @relation(fields: [projectId], references: [id])
+  projectId String
+  role      StakeHolderRoles @default(developer)
+
+  @@id([memberId, projectId])
+}
+
+model VCS {
+  id        String   @id @default(cuid())
+  remoteUrl String   @unique
+  name      String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String?
+
+  @@index([projectId])
+}
+
+model ProjectBoard {
+  id        String   @id @default(cuid())
+  name      String
+  project   Project  @relation(fields: [projectId], references: [id])
+  projectId String
+  epics     Epic[]
+  tickets   Ticket[]
+}
+
+model Ticket {
+  id             String        @id @default(cuid())
+  ProjectBoard   ProjectBoard? @relation(fields: [projectBoardId], references: [id])
+  projectBoardId String?
+  epics          Epic[]
+  Tracking       Tracking[]
+}
+
+model Milestone {
+  id        String   @id @default(cuid())
+  Project   Project? @relation(fields: [projectId], references: [id])
+  projectId String?
+  epics     Epic[]
+}
+
+model Epic {
+  id             String        @id @default(cuid())
+  ProjectBoard   ProjectBoard? @relation(fields: [projectBoardId], references: [id])
+  projectBoardId String?
+  tickets        Ticket[]
+  Milestone      Milestone?    @relation(fields: [milestoneId], references: [id])
+  milestoneId    String?
+}
+
+model Tracking {
+  id         String    @id @default(cuid())
+  account    Account   @relation(fields: [accountId], references: [id])
+  accountId  String
+  ticket     Ticket    @relation(fields: [ticketId], references: [id])
+  ticketId   String
+  comment    String?
+  startAt    DateTime  @default(now())
+  stopAt     DateTime?
+  autoStopAt DateTime?
+  updatedAt  DateTime  @updatedAt
+}
