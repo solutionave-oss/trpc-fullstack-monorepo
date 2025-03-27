@@ -22,7 +22,6 @@ export default function Index() {
 
   const onSubmit = (data: FormData) => {
     console.log(data);
-
   };
 
   return <div>
