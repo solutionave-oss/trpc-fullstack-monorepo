@@ -1,12 +1,12 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useRouter, } from 'next/navigation';
+import { useEffect, } from 'react';
 
-import { useAuthState } from '../context/AuthContext';
+import { useAuthState, } from '../context/AuthContext';
 
 export const AuthRedirector = () => {
-  const { authData } = useAuthState();
+  const { authData, } = useAuthState();
   const router = useRouter();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export const AuthRedirector = () => {
     } else if (!authData.account?.organisationMember.length) {
       router.push('/organisations/create');
     }
-  }, [authData, router]);
+  }, [ authData, router, ]);
 
   return <></>;
 };

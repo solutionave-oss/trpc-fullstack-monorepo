@@ -1,11 +1,11 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
+import { zodResolver, } from '@hookform/resolvers/zod';
 import clsx from 'clsx';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { api } from 'src/web/src/client/trpc';
-import { useAuthState } from 'src/web/src/context/AuthContext';
+import { useRouter, } from 'next/navigation';
+import { useForm, } from 'react-hook-form';
+import { api, } from 'src/web/src/client/trpc';
+import { useAuthState, } from 'src/web/src/context/AuthContext';
 import * as z from 'zod';
 
 const schema = z.object({
@@ -16,15 +16,15 @@ type SchemaData = z.infer<typeof schema>;
 
 export default function Index() {
   const router = useRouter();
-  const { setAuthData } = useAuthState();
-  const { register, handleSubmit } = useForm({
+  const { setAuthData, } = useAuthState();
+  const { register, handleSubmit, } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       name: '',
     },
   });
 
-  const onSubmit = async ({ name }: SchemaData) => {
+  const onSubmit = async ({ name, }: SchemaData) => {
     const response = await api.organisationRouter.registerOrganisation.mutate({
       name,
     });
@@ -38,12 +38,12 @@ export default function Index() {
   return (
     <div className="flex">
       <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={clsx('flex flex-col gap-1')}
+        onSubmit={ handleSubmit(onSubmit) }
+        className={ clsx('flex flex-col gap-1') }
       >
         <div>New Organisation</div>
         <input
-          {...register('name')}
+          { ...register('name') }
           type="text"
           placeholder="Organisation Name"
         />

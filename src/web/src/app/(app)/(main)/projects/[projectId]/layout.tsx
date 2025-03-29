@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import type { ReactNode } from "react";
+import { useParams, } from "next/navigation";
+import type { ReactNode, } from "react";
 
-export default function Index({ children }:{children: ReactNode}) {
+export default function Index({ children, }: {children: ReactNode}) {
   const params = useParams<{projectId: string}>();
   return <div>
     <div className="flex item-center gap-2">

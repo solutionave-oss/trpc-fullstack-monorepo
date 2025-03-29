@@ -1,11 +1,11 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { api } from 'src/web/src/client/trpc';
-import { useAuthState } from 'src/web/src/context/AuthContext';
-import { notify } from 'src/web/src/utils/notifier';
+import { zodResolver, } from '@hookform/resolvers/zod';
+import { useRouter, } from 'next/navigation';
+import { useForm, } from 'react-hook-form';
+import { api, } from 'src/web/src/client/trpc';
+import { useAuthState, } from 'src/web/src/context/AuthContext';
+import { notify, } from 'src/web/src/utils/notifier';
 import * as z from 'zod';
 
 const schema = z.object({
@@ -17,8 +17,8 @@ type schemaType = z.infer<typeof schema>;
 
 export default function SignIn() {
   const router = useRouter();
-  const { setAuthData } = useAuthState();
-  const { handleSubmit, register } = useForm({
+  const { setAuthData, } = useAuthState();
+  const { handleSubmit, register, } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       email: 'abubakar@gmail.com',
@@ -38,7 +38,7 @@ export default function SignIn() {
       }
     } catch (_error) {
       console.log(_error);
-      
+
       const error = _error as { message: string };
       notify(error.message ?? 'Something went wrong');
     }
@@ -47,11 +47,11 @@ export default function SignIn() {
   return (
     <div>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={ handleSubmit(onSubmit) }
         className="flex flex-col gap-2 min-w-[250pt]"
       >
-        <input {...register('email')} type="email" />
-        <input {...register('password')} type="text" />
+        <input { ...register('email') } type="email"/>
+        <input { ...register('password') } type="text"/>
         <button>Sign In</button>
       </form>
     </div>

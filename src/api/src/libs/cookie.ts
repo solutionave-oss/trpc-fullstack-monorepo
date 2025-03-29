@@ -1,14 +1,14 @@
-import { IncomingMessage, ServerResponse } from 'http';
+import type { IncomingMessage, ServerResponse, } from 'http';
 
 import * as cookie from 'cookie';
 
-import { JWT } from './jwt';
-import { Ctx } from './trpc/context';
+import { JWT, } from './jwt';
+import type { Ctx, } from './trpc/context';
 
 export class Cookie {
   static setToken = (ctx: Ctx, id: string) => {
     const token = ctx.JWT.Sign({
-      id 
+      id,
     });
 
     ctx.res.setHeader(
@@ -25,7 +25,7 @@ export class Cookie {
     );
 
     return {
-      token 
+      token,
     };
   };
 
@@ -50,7 +50,7 @@ export class Cookie {
   ): ReturnType<typeof JWT.Decode> => {
     if (!req.headers.cookie) {
       return {
-        id: '' 
+        id: '',
       };
     }
 
@@ -58,7 +58,7 @@ export class Cookie {
 
     if (!token) {
       return {
-        id: '' 
+        id: '',
       };
     }
 
@@ -67,7 +67,7 @@ export class Cookie {
     } catch {
       Cookie.resetCookie(res);
       return {
-        id: '' 
+        id: '',
       };
     }
     return JWT.Decode(token);

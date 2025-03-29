@@ -43,7 +43,7 @@ export default defineConfig([
       "no-multiple-empty-lines": [ "error", {
         max: 1, maxEOF: 0,
       }, ],
-      '@stylistic/ts/indent': [ 'error', 2, ],
+      // '@stylistic/ts/indent': [ 'error', 2, ],
       "@stylistic/ts/type-annotation-spacing": "error",
       "no-empty": "error",
       "@typescript-eslint/no-empty-function": [ "error", {

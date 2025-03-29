@@ -1,6 +1,7 @@
-import { decode, sign, SignOptions, verify } from 'jsonwebtoken';
+import type { SignOptions, } from 'jsonwebtoken';
+import { decode, sign, verify, } from 'jsonwebtoken';
 
-type SigningType = { id: string };
+interface SigningType { id: string }
 
 export class JWT {
   static SECRET_KEY = 'abubakarasifmughal.solutionave.inc';

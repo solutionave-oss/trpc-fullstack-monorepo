@@ -1,15 +1,15 @@
 
-import { IncomingMessage, ServerResponse } from 'http';
+import type { IncomingMessage, ServerResponse, } from 'http';
 
-import { PrismaClient } from '@prisma/client';
-import {
+import type { PrismaClient, } from '@prisma/client';
+import type {
   NodeHTTPRequest,
   NodeHTTPResponse,
 } from '@trpc/server/dist/adapters/node-http';
 import cors from 'cors';
 
-import { Cookie } from '../cookie';
-import { isOpenRoute } from '../guard';
+import { Cookie, } from '../cookie';
+import { isOpenRoute, } from '../guard';
 
 export const middleware = (
   req: NodeHTTPRequest,
@@ -18,7 +18,7 @@ export const middleware = (
 ) => {
   return cors({
     credentials: true,
-    origin: ['http://localhost:3000', 'http://localhost:4000'],
+    origin: [ 'http://localhost:3000', 'http://localhost:4000', ],
   })(req, res, next);
 };
 
@@ -42,7 +42,7 @@ export const getAuth = (
   }
 
   return async () => {
-    const [currentOrganisation, account] = await Promise.all([
+    const [ currentOrganisation, account, ] = await Promise.all([
       prisma.organisation.findUnique({
         where: {
           code: organisationCode,
@@ -50,10 +50,10 @@ export const getAuth = (
       }),
       prisma.account.findUnique({
         where: {
-          id 
+          id,
         },
         omit: {
-          password: true 
+          password: true,
         },
         include: {
           organisationMember: {
@@ -70,8 +70,8 @@ export const getAuth = (
       throw new Error('No User Found');
     }
     return {
-      account, currentOrganisation 
+      account, currentOrganisation,
     };
   };
-  
+
 };

@@ -85,7 +85,7 @@ export const projectRouter = trpcRouter({
     name: z.string().min(3),
     startDate: z.any(),
     endDate: z.any(),
-  })).mutation(async ({ ctx: { prisma, },input, }) => {
+  })).mutation(async ({ ctx: { prisma, }, input, }) => {
     await prisma.project.update({
       where: {
         id: input.id,

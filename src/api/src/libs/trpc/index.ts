@@ -1,9 +1,9 @@
-import { initTRPC } from '@trpc/server';
+import { initTRPC, } from '@trpc/server';
 
-import { Ctx } from './context';
+import type { Ctx, } from './context';
 
-export const { router: trpcRouter, procedure: trpcProcedure } = initTRPC
+export const { router: trpcRouter, procedure: trpcProcedure, } = initTRPC
   .context<Ctx>()
   .create({
-    allowOutsideOfServer: true 
+    allowOutsideOfServer: true,
   });

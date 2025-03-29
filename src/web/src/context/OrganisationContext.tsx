@@ -1,17 +1,20 @@
 'use client';
 
-import { Organisation } from '@prisma/client';
-import {
-  createContext,
+import type { Organisation, } from '@prisma/client';
+import type {
   FC,
   ReactNode,
+} from 'react';
+import {
+  createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
 } from 'react';
 
-import { useAuthState } from './AuthContext';
-import { api } from '../client/trpc';
+import { useAuthState, } from './AuthContext';
+import { api, } from '../client/trpc';
 
 const OrganisationContext = createContext<{
   selectedOrganisation?: Organisation;
@@ -27,24 +30,16 @@ const OrganisationContext = createContext<{
 export const OrganisationProvider: FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const { setAuthData } = useAuthState();
-  const [selectedOrganisation, _setSelectedOrganisation] =
+  const { setAuthData, } = useAuthState();
+  const [ selectedOrganisation, _setSelectedOrganisation, ] =
     useState<Organisation>();
-  const [members, setMembers] = useState<
+  const [ members, setMembers, ] = useState<
     Awaited<ReturnType<typeof api.organisationRouter.getMembers.query>>
   >([]);
 
-  const setSelectedOrganisation = (org: Organisation) => {
-    api.organisationRouter.setOrganisation
-      .query({
-        code: org.code 
-      })
-      .then(reload);
-  };
-
-  const reload = async () => {
+  const reload = useCallback(async () => {
     try {
-      const [data, members] = await Promise.all([
+      const [ data, _members, ] = await Promise.all([
         api.accountRouter.getInfo.query(),
         api.organisationRouter.getMembers.query(),
       ]);
@@ -54,11 +49,19 @@ export const OrganisationProvider: FC<{ children: ReactNode }> = ({
         setAuthData(data);
       }
 
-      setMembers(members);
+      setMembers(_members);
     } catch (error) {
       console.error('Error reloading data:', error);
     }
-  };
+  }, [ setAuthData, ]);
+
+  const setSelectedOrganisation = useCallback((org: Organisation) => {
+    api.organisationRouter.setOrganisation
+      .query({
+        code: org.code,
+      })
+      .then(reload);
+  }, [ reload, ]);
 
   useEffect(() => {
     api.accountRouter.getInfo.query().then((data) => {
@@ -67,18 +70,18 @@ export const OrganisationProvider: FC<{ children: ReactNode }> = ({
         setSelectedOrganisation(data.currentOrganisation);
       }
     });
-  }, []);
+  }, [ setAuthData, setSelectedOrganisation, ]);
 
   return (
     <OrganisationContext.Provider
-      value={{
+      value={ {
         selectedOrganisation,
         setSelectedOrganisation,
         members,
         reload,
-      }}
+      } }
     >
-      {children}
+      { children }
     </OrganisationContext.Provider>
   );
 };

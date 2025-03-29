@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { ToastContainer } from "react-toastify";
+import type { ReactNode, } from "react";
+import { ToastContainer, } from "react-toastify";
 import "./global.css";
 
 export const metadata = {
@@ -14,11 +14,11 @@ export default function RootLayout({
 }) {
 
   return (
-    
+
     <html lang="en">
       <body>
-        {children}
-        <ToastContainer />
+        { children }
+        <ToastContainer/>
       </body>
     </html>
   );

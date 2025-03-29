@@ -2,12 +2,12 @@
 
 import clsx from 'clsx';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { api } from 'src/web/src/client/trpc';
-import { Dropdown } from 'src/web/src/components/Dropdown';
+import { useEffect, useState, } from 'react';
+import { api, } from 'src/web/src/client/trpc';
+import { Dropdown, } from 'src/web/src/components/Dropdown';
 
 export default function Index() {
-  const [projects, setProjects] =
+  const [ projects, setProjects, ] =
     useState<Awaited<ReturnType<typeof api.projectRouter.getProjects.query>>>();
 
   useEffect(() => {
@@ -29,33 +29,33 @@ export default function Index() {
             <th className="text-start border px-3">Start Date</th>
             <th className="text-start border px-3">End Date</th>
             <th className="text-start border px-3">Status</th>
-            <th className="text-start border px-3" />
+            <th className="text-start border px-3"/>
           </tr>
         </thead>
         <tbody>
-          {projects?.map((project) => (
-            <tr key={project.id}>
-              <td className="text-start border py-0.5 px-3">{project.id}</td>
-              <td className={clsx('text-start border py-0.5 px-3 select-none')}>
+          { projects?.map((project) => (
+            <tr key={ project.id }>
+              <td className="text-start border py-0.5 px-3">{ project.id }</td>
+              <td className={ clsx('text-start border py-0.5 px-3 select-none') }>
                 <Link
-                  href={`/projects/${project.id}`}
+                  href={ `/projects/${project.id}` }
                   className="text-blue-600 hover:underline cursor-pointer active:text-indigo-600"
                 >
-                  {project.name}
+                  { project.name }
                 </Link>
               </td>
               <td className="text-start border py-0.5 px-3">
-                {project.startDate}
+                { project.startDate }
               </td>
               <td className="text-start border py-0.5 px-3">
-                {project.endDate}
+                { project.endDate }
               </td>
               <td className="text-start border py-0.5 px-3">
-                {project.status}
+                { project.status }
               </td>
               <td className="text-start border py-0.5 px-3">
                 <Dropdown
-                  onClick={(data) => {
+                  onClick={ (data) => {
                     switch (data.value) {
                       case '_delete':
                         alert('Delete');
@@ -63,21 +63,21 @@ export default function Index() {
                       case '_update':
                         alert('Update');
                     }
-                  }}
-                  options={[
+                  } }
+                  options={ [
                     {
-                      value: '_update', label: 'Update' 
+                      value: '_update', label: 'Update',
                     },
                     {
-                      value: '_delete', label: 'Delete' 
+                      value: '_delete', label: 'Delete',
                     },
-                  ]}
+                  ] }
                 >
                   Actions
                 </Dropdown>
               </td>
             </tr>
-          ))}
+          )) }
         </tbody>
       </table>
     </div>

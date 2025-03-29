@@ -1,10 +1,10 @@
 'use client';
 
-import { Dropdown } from 'src/web/src/components/Dropdown';
-import { useAuthState } from 'src/web/src/context/AuthContext';
+import { Dropdown, } from 'src/web/src/components/Dropdown';
+import { useAuthState, } from 'src/web/src/context/AuthContext';
 
 export default function Index() {
-  const { authData } = useAuthState();
+  const { authData, } = useAuthState();
 
   return (
     <div>
@@ -14,21 +14,21 @@ export default function Index() {
           <tr>
             <th className="text-start border px-3">Code</th>
             <th className="text-start border px-3">Name</th>
-            <th className="text-start border px-3" />
+            <th className="text-start border px-3"/>
           </tr>
         </thead>
         <tbody>
-          {authData.account.organisationMember.map((orgmem) => (
-            <tr key={`${orgmem.accountId}-${orgmem.organisationId}`}>
+          { authData.account.organisationMember.map((orgmem) => (
+            <tr key={ `${orgmem.accountId}-${orgmem.organisationId}` }>
               <td className="text-start border px-3">
-                {orgmem.organisation.code}
+                { orgmem.organisation.code }
               </td>
               <td className="text-start border px-3">
-                {orgmem.organisation.name}
+                { orgmem.organisation.name }
               </td>
               <td className="border px-3 py-1">
                 <Dropdown
-                  onClick={(data) => {
+                  onClick={ (data) => {
                     switch (data.value) {
                       case '_delete':
                         alert('Delete');
@@ -36,21 +36,21 @@ export default function Index() {
                       case '_update':
                         alert('Update');
                     }
-                  }}
-                  options={[
+                  } }
+                  options={ [
                     {
-                      value: '_update', label: 'Update' 
+                      value: '_update', label: 'Update',
                     },
                     {
-                      value: '_delete', label: 'Delete' 
+                      value: '_delete', label: 'Delete',
                     },
-                  ]}
+                  ] }
                 >
                   Actions
                 </Dropdown>
               </td>
             </tr>
-          ))}
+          )) }
         </tbody>
       </table>
     </div>

@@ -5,7 +5,6 @@ import { useParams, } from 'next/navigation';
 import { useEffect, } from 'react';
 import { useForm, } from 'react-hook-form';
 import { api, } from 'src/web/src/client/trpc';
-import { useLoader, } from 'src/web/src/context/LoaderContext';
 import { localToUTC, utcToLocal, } from 'src/web/src/utils/converters';
 import { notify, } from 'src/web/src/utils/notifier';
 import * as z from 'zod';
@@ -19,7 +18,7 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function Index() {
-  const { startLoading, stopLoading, } = useLoader();
+
   const { projectId, } = useParams<{ projectId: string }>();
   const { register, handleSubmit, formState: { errors, }, setValue, } = useForm<FormData>({
     resolver: zodResolver(schema),

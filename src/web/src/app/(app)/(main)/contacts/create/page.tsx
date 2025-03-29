@@ -1,10 +1,10 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { api } from 'src/web/src/client/trpc';
-import { useOrganisationState } from 'src/web/src/context/OrganisationContext';
+import { zodResolver, } from '@hookform/resolvers/zod';
+import { useRouter, } from 'next/navigation';
+import { useForm, } from 'react-hook-form';
+import { api, } from 'src/web/src/client/trpc';
+import { useOrganisationState, } from 'src/web/src/context/OrganisationContext';
 import * as z from 'zod';
 
 const schema = z.object({
@@ -15,9 +15,9 @@ const schema = z.object({
 type SchemaType = z.infer<typeof schema>;
 
 export default function Index() {
-  const { reload } = useOrganisationState();
+  const { reload, } = useOrganisationState();
   const router = useRouter();
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
       email: '',
@@ -35,11 +35,11 @@ export default function Index() {
     <div>
       <div className="mb-4 font-semibold">Add Contacts</div>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={ handleSubmit(onSubmit) }
         className="flex flex-col gap-1 w-[250pt]"
       >
-        <input {...register('email')} type="email" placeholder="Email" />
-        <input {...register('password')} type="text" placeholder="Password" />
+        <input { ...register('email') } type="email" placeholder="Email"/>
+        <input { ...register('password') } type="text" placeholder="Password"/>
         <button type="submit">Add User</button>
       </form>
     </div>
