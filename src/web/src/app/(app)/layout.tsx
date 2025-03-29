@@ -1,11 +1,13 @@
-import { cookies } from 'next/headers';
-import { ReactNode } from 'react';
+import { cookies, } from 'next/headers';
+import type { ReactNode, } from 'react';
 
-import { api, serverApi } from '../../client/trpc';
-import { AuthProvider } from '../../context/AuthContext';
-import { OrganisationProvider } from '../../context/OrganisationContext';
+import type { api, } from '../../client/trpc';
+import { serverApi, } from '../../client/trpc';
+import { AuthProvider, } from '../../context/AuthContext';
+import { LoaderProvider, } from '../../context/LoaderContext';
+import { OrganisationProvider, } from '../../context/OrganisationContext';
 
-export default async function Layout({ children }: { children: ReactNode }) {
+export default async function Layout({ children, }: { children: ReactNode }) {
   let authData: Awaited<ReturnType<typeof api.accountRouter.getInfo.query>> = {
     account: {
       email: '',
@@ -25,8 +27,10 @@ export default async function Layout({ children }: { children: ReactNode }) {
     //
   }
   return (
-    <AuthProvider authData={authData}>
-      <OrganisationProvider>{children}</OrganisationProvider>
-    </AuthProvider>
+    <LoaderProvider>
+      <AuthProvider authData={ authData }>
+        <OrganisationProvider>{ children }</OrganisationProvider>
+      </AuthProvider>
+    </LoaderProvider>
   );
 }

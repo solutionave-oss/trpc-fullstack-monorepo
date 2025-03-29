@@ -1,7 +1,7 @@
 import * as z from 'zod';
 
-import { replaceSpaceWithHypens } from '../../libs/processors';
-import { trpcProcedure, trpcRouter } from '../../libs/trpc';
+import { replaceSpaceWithHypens, } from '../../libs/processors';
+import { trpcProcedure, trpcRouter, } from '../../libs/trpc';
 
 export const organisationRouter = trpcRouter({
   registerOrganisation: trpcProcedure
@@ -10,7 +10,7 @@ export const organisationRouter = trpcRouter({
         name: z.string(),
       })
     )
-    .mutation(async ({ input, ctx: { prisma, getAuth } }) => {
+    .mutation(async ({ input, ctx: { prisma, getAuth, }, }) => {
       const auth = await getAuth();
 
       const response = await prisma.organisation.create({
@@ -39,7 +39,7 @@ export const organisationRouter = trpcRouter({
         code: z.string(),
       })
     )
-    .query(({ input, ctx: { Cookie, res } }) => {
+    .query(({ input, ctx: { Cookie, res, }, }) => {
       res.setHeader(
         'Set-Cookie',
         Cookie.setCookieValue('organisation', input.code)
@@ -53,7 +53,7 @@ export const organisationRouter = trpcRouter({
         password: z.string(),
       })
     )
-    .mutation(async ({ input, ctx: { prisma, getAuth } }) => {
+    .mutation(async ({ input, ctx: { prisma, getAuth, }, }) => {
       const auth = await getAuth();
       const account = await prisma.account.create({
         data: {
@@ -77,7 +77,7 @@ export const organisationRouter = trpcRouter({
       return account;
     }),
 
-  getMembers: trpcProcedure.query(async ({ ctx: { prisma, getAuth } }) => {
+  getMembers: trpcProcedure.query(async ({ ctx: { prisma, getAuth, }, }) => {
     const auth = await getAuth();
     const response = await prisma.organisationMember.findMany({
       where: {

@@ -1,16 +1,17 @@
-import { object, string } from "zod";
+import { object, string, } from "zod";
 
-import { trpcProcedure, trpcRouter } from "../../libs/trpc";
+import { trpcProcedure, trpcRouter, } from "../../libs/trpc";
 
 export const accountRouter = trpcRouter({
   signIn: trpcProcedure
     .input(
       object({
-        email: string().nonempty().email(),
+        email: string().nonempty()
+          .email(),
         password: string().nonempty(),
       })
     )
-    .mutation(async ({ ctx, input }) => {
+    .mutation(async ({ ctx, input, }) => {
       const existing = await ctx.prisma.account.findUnique({
         where: {
           email: String(input.email).toLowerCase(),
@@ -28,9 +29,9 @@ export const accountRouter = trpcRouter({
           },
         });
 
-        const { token } = ctx.Cookie.setToken(ctx, account.id);
+        const { token, } = ctx.Cookie.setToken(ctx, account.id);
         return {
-          token 
+          token,
         };
       }
 
@@ -39,16 +40,16 @@ export const accountRouter = trpcRouter({
         throw new Error("Invalid Password");
       }
 
-      const { token } = ctx.Cookie.setToken(ctx, existing.id);
+      const { token, } = ctx.Cookie.setToken(ctx, existing.id);
       return {
-        token 
+        token,
       };
     }),
-  getInfo: trpcProcedure.query(async ({ ctx }) => {
+  getInfo: trpcProcedure.query(async ({ ctx, }) => {
     const auth = await ctx.getAuth();
     return auth;
   }),
-  signOut: trpcProcedure.query(async ({ ctx }) => {
+  signOut: trpcProcedure.query(async ({ ctx, }) => {
     ctx.Cookie.clearAllCookies(ctx.req, ctx.res);
   }),
 });

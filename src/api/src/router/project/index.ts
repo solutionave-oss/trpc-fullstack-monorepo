@@ -1,6 +1,6 @@
 import * as z from 'zod';
 
-import { trpcProcedure, trpcRouter } from '../../libs/trpc';
+import { trpcProcedure, trpcRouter, } from '../../libs/trpc';
 
 export const projectRouter = trpcRouter({
   createProject: trpcProcedure
@@ -9,7 +9,7 @@ export const projectRouter = trpcRouter({
         name: z.string(),
       })
     )
-    .mutation(async ({ input, ctx: { getAuth, prisma } }) => {
+    .mutation(async ({ input, ctx: { getAuth, prisma, }, }) => {
       const auth = await getAuth();
 
       const project = await prisma.project.create({
@@ -35,7 +35,7 @@ export const projectRouter = trpcRouter({
 
       return project;
     }),
-  getProjects: trpcProcedure.query(async ({ ctx: { getAuth, prisma } }) => {
+  getProjects: trpcProcedure.query(async ({ ctx: { getAuth, prisma, }, }) => {
     const account = await getAuth();
 
     const projects = await prisma.project.findMany({
@@ -65,11 +65,11 @@ export const projectRouter = trpcRouter({
         id: z.string(),
       })
     )
-    .query(async ({ input, ctx: { getAuth, prisma } }) => {
+    .query(async ({ input, ctx: { getAuth, prisma, }, }) => {
       await getAuth();
       const project = await prisma.project.findUnique({
         where: {
-          id: input.id 
+          id: input.id,
         },
         include: {
           milestones: true,
@@ -80,4 +80,21 @@ export const projectRouter = trpcRouter({
       });
       return project;
     }),
+  updateProject: trpcProcedure.input(z.object({
+    id: z.string().nonempty(),
+    name: z.string().min(3),
+    startDate: z.any(),
+    endDate: z.any(),
+  })).mutation(async ({ ctx: { prisma, },input, }) => {
+    await prisma.project.update({
+      where: {
+        id: input.id,
+      },
+      data: {
+        name: input.name,
+        startDate: input.startDate,
+        endDate: input.endDate,
+      },
+    });
+  }),
 });
