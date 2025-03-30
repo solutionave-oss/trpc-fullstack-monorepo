@@ -1,11 +1,11 @@
 import js from "@eslint/js";
 import stylisticTs from '@stylistic/eslint-plugin-ts';
-import { defineConfig, } from "eslint/config";
 import importPlugin from "eslint-plugin-import";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import tailwindcss from "eslint-plugin-tailwindcss";
+import { defineConfig, } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
@@ -43,7 +43,7 @@ export default defineConfig([
       "no-multiple-empty-lines": [ "error", {
         max: 1, maxEOF: 0,
       }, ],
-      // '@stylistic/ts/indent': [ 'error', 2, ],
+      "react/jsx-props-no-multi-spaces": "error",
       "@stylistic/ts/type-annotation-spacing": "error",
       "no-empty": "error",
       "@typescript-eslint/no-empty-function": [ "error", {
@@ -130,9 +130,9 @@ export default defineConfig([
       "react/jsx-tag-spacing": [
         "error",
         {
-          beforeSelfClosing: "never", // Ensures <div > → <div>
-          afterOpening: "never", // No space after opening <div>
-          beforeClosing: "never", // No space before closing </>
+          beforeSelfClosing: "never",      
+          afterOpening: "never", 
+          beforeClosing: "never", 
         },
       ],
       "object-curly-spacing": [ "error", "always", ],
