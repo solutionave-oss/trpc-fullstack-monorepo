@@ -36,10 +36,15 @@ export default function Index() {
       <div className="mb-4 font-semibold">Add Contacts</div>
       <form
         onSubmit={ handleSubmit(onSubmit) }
-        className="flex flex-col gap-1 w-[250pt]"
-      >
-        <input { ...register('email') } type="email" placeholder="Email"/>
-        <input { ...register('password') } type="text" placeholder="Password"/>
+        className="flex flex-col gap-1 w-[250pt]">
+        <input { ...register('email') }
+          type="email"
+          placeholder="Email"
+        />
+        <input { ...register('password') }
+          type="text"
+          placeholder="Password"
+        />
         <button type="submit">Add User</button>
       </form>
     </div>

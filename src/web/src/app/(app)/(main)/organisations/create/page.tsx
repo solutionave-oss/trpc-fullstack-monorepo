@@ -39,8 +39,7 @@ export default function Index() {
     <div className="flex">
       <form
         onSubmit={ handleSubmit(onSubmit) }
-        className={ clsx('flex flex-col gap-1') }
-      >
+        className={ clsx('flex flex-col gap-1') }>
         <div>New Organisation</div>
         <input
           { ...register('name') }

@@ -31,7 +31,10 @@ export default function Index() {
     <div>
       <div>Create Project</div>
       <form onSubmit={ handleSubmit(onSubmit) }>
-        <input type="text" { ...register('name') } placeholder="Project Name"/>
+        <input type="text"
+          { ...register('name') }
+          placeholder="Project Name"
+        />
       </form>
     </div>
   );

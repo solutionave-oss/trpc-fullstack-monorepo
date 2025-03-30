@@ -57,7 +57,8 @@ export const Sidebar: FC = () => {
   return (
     <div className={ clsx('min-w-[250pt] border-r p-3', 'flex flex-col gap-2') }>
       { SIDEBAR.map((item) => (
-        <div key={ item.section } className="flex flex-col gap-2">
+        <div key={ item.section }
+          className="flex flex-col gap-2">
           <div className="text-sm text-neutral-400 font-medium px-1">
             { item.section }
           </div>
@@ -65,8 +66,7 @@ export const Sidebar: FC = () => {
             <Link
               className={ itemStyle }
               key={ `${link.label}_${link.href}` }
-              href={ link.href }
-            >
+              href={ link.href }>
               { link.label }
             </Link>
           )) }

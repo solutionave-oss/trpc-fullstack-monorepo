@@ -9,8 +9,7 @@ export default function Layout({ children, }: { children: ReactNode }) {
           'border-r border-neutral-200',
           'flex-[1] p-3',
           'flex flex-col justify-between items-center'
-        ) }
-      >
+        ) }>
         <div/>
         <div className="text-xs text-center text-neutral-200">
           <div>
@@ -23,8 +22,7 @@ export default function Layout({ children, }: { children: ReactNode }) {
         className={ clsx(
           'flex-[1.5] p-2 h-full',
           'flex items-center justify-center'
-        ) }
-      >
+        ) }>
         { children }
       </div>
     </div>

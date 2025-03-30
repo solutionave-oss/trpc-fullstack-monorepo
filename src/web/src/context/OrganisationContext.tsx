@@ -79,8 +79,7 @@ export const OrganisationProvider: FC<{ children: ReactNode }> = ({
         setSelectedOrganisation,
         members,
         reload,
-      } }
-    >
+      } }>
       { children }
     </OrganisationContext.Provider>
   );

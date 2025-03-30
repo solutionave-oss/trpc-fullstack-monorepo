@@ -39,8 +39,7 @@ export default function Index() {
               <td className={ clsx('text-start border py-0.5 px-3 select-none') }>
                 <Link
                   href={ `/projects/${project.id}` }
-                  className="text-blue-600 hover:underline cursor-pointer active:text-indigo-600"
-                >
+                  className="text-blue-600 hover:underline cursor-pointer active:text-indigo-600">
                   { project.name }
                 </Link>
               </td>
@@ -71,8 +70,7 @@ export default function Index() {
                     {
                       value: '_delete', label: 'Delete',
                     },
-                  ] }
-                >
+                  ] }>
                   Actions
                 </Dropdown>
               </td>

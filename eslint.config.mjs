@@ -1,11 +1,11 @@
 import js from "@eslint/js";
 import stylisticTs from '@stylistic/eslint-plugin-ts';
+import { defineConfig, } from "eslint/config";
 import importPlugin from "eslint-plugin-import";
 import jsxA11y from "eslint-plugin-jsx-a11y";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import tailwindcss from "eslint-plugin-tailwindcss";
-import { defineConfig, } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
@@ -31,6 +31,29 @@ export default defineConfig([
       '@stylistic/ts': stylisticTs,
     },
     rules: {
+      "react/jsx-closing-bracket-location": [
+        "error",
+        {
+          nonEmpty: "after-props",
+          selfClosing: "line-aligned",
+        },
+      ],
+      "max-len": [
+        "error",
+        {
+          "code": 100,
+          "ignoreUrls": true,
+          "ignoreStrings": true,
+          "ignoreTemplateLiterals": true,
+        },
+      ],
+      "object-curly-newline": [ "error", {
+        "multiline": true, "consistent": true,
+      }, ],
+      "react/jsx-max-props-per-line": [ "error", {
+        "maximum": 1, "when": "always",
+      }, ],
+
       "tailwindcss/no-custom-classname": "off",
       eqeqeq: "error",
       "no-unused-vars": "off",
@@ -130,9 +153,9 @@ export default defineConfig([
       "react/jsx-tag-spacing": [
         "error",
         {
-          beforeSelfClosing: "never",      
-          afterOpening: "never", 
-          beforeClosing: "never", 
+          beforeSelfClosing: "never",
+          afterOpening: "never",
+          beforeClosing: "never",
         },
       ],
       "object-curly-spacing": [ "error", "always", ],

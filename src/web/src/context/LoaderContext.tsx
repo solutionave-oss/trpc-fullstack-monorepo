@@ -44,8 +44,7 @@ const LoadingOverlay = () => {
       } }
       exit={ {
         opacity: 0,
-      } }
-    >
+      } }>
       <motion.div
         className="w-16 h-16 border-4 border-t-transparent border-white rounded-full animate-spin"
       />

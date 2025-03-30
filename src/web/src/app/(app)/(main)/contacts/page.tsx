@@ -42,8 +42,7 @@ export default function Index() {
                     {
                       value: '_delete', label: 'Delete',
                     },
-                  ] }
-                >
+                  ] }>
                   Actions
                 </Dropdown>
               </td>

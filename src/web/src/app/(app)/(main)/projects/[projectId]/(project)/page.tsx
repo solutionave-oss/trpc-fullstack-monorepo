@@ -52,10 +52,18 @@ export default function Index() {
 
   return (
     <div className='flex'>
-      <form onSubmit={ handleSubmit(onSubmit) } className='flex flex-col gap-2'>
-        <input type="text" { ...register('name') } placeholder='Project Name'/>
-        <input type="datetime-local" { ...register('startDate') }/>
-        <input type="datetime-local" { ...register('endDate') }/>
+      <form onSubmit={ handleSubmit(onSubmit) }
+        className='flex flex-col gap-2'>
+        <input type="text"
+          { ...register('name') }
+          placeholder='Project Name'
+        />
+        <input type="datetime-local"
+          { ...register('startDate') }
+        />
+        <input type="datetime-local"
+          { ...register('endDate') }
+        />
         <div>{ errors.name?.message }</div>
         <div>{ errors.startDate?.message }</div>
         <div>{ errors.endDate?.message }</div>

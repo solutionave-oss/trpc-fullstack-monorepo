@@ -48,10 +48,13 @@ export default function SignIn() {
     <div>
       <form
         onSubmit={ handleSubmit(onSubmit) }
-        className="flex flex-col gap-2 min-w-[250pt]"
-      >
-        <input { ...register('email') } type="email"/>
-        <input { ...register('password') } type="text"/>
+        className="flex flex-col gap-2 min-w-[250pt]">
+        <input { ...register('email') }
+          type="email"
+        />
+        <input { ...register('password') }
+          type="text"
+        />
         <button>Sign In</button>
       </form>
     </div>

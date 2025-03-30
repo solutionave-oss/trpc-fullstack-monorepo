@@ -25,8 +25,7 @@ export const Header = () => {
       className={ clsx(
         'py-1 px-2 bg-neutral-100',
         'flex flex-row items-center gap-2'
-      ) }
-    >
+      ) }>
       <div className="text-xl">Aiobisoft</div>
       <Dropdown
         onClick={ (data) => {
@@ -49,8 +48,7 @@ export const Header = () => {
           }))
           .concat([ {
             label: 'Register New', value: '_create_',
-          }, ]) }
-      >
+          }, ]) }>
         { selectedOrganisation?.name ?? 'Select Organisation' }
       </Dropdown>
       <div className="flex-1"/>
@@ -72,8 +70,7 @@ export const Header = () => {
               onSignout();
               break;
           }
-        } }
-      >
+        } }>
         { authData.account.email }
       </Dropdown>
     </div>

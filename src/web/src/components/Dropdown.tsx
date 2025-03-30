@@ -24,10 +24,11 @@ export const Dropdown = <T extends string>({
         className={ clsx(
           'flex items-center gap-1 px-3 py-0.5 bg-white border rounded-lg',
           'shadow-sm hover:bg-gray-50 transition text-sm'
-        ) }
-      >
+        ) }>
         { children }
-        <FiChevronDown size={ 16 } color="black"/>
+        <FiChevronDown size={ 16 }
+          color="black"
+        />
       </button>
 
       { isOpen && (
@@ -35,8 +36,7 @@ export const Dropdown = <T extends string>({
           className={ clsx(
             'absolute left-0 mt-1 w-40 bg-white border rounded-lg shadow-md',
             'flex flex-col py-0.5 z-10'
-          ) }
-        >
+          ) }>
           { options.map((opt) => (
             <button
               key={ opt.value }
@@ -47,8 +47,7 @@ export const Dropdown = <T extends string>({
               onClick={ () => {
                 onClick(opt);
                 setIsOpen(false);
-              } }
-            >
+              } }>
               { opt.label }
             </button>
           )) }
