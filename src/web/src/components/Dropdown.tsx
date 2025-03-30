@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import type { JSX, } from 'react';
 import { useState, } from 'react';
 import { FiChevronDown, } from 'react-icons/fi';
 
@@ -11,7 +12,7 @@ export const Dropdown = <T extends string>({
   options,
   onClick,
 }: {
-  children: string;
+  children: string | JSX.Element;
   options: OptionType<T>[];
   onClick: (data: OptionType<T>) => void;
 }) => {

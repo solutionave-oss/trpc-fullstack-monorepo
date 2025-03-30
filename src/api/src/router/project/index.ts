@@ -1,3 +1,4 @@
+import { ProjectStatus, } from '@prisma/client';
 import * as z from 'zod';
 
 import { trpcProcedure, trpcRouter, } from '../../libs/trpc';
@@ -55,6 +56,9 @@ export const projectRouter = trpcRouter({
           },
         },
       },
+      orderBy: {
+        startDate: 'asc',
+      },
     });
 
     return projects;
@@ -94,6 +98,19 @@ export const projectRouter = trpcRouter({
         name: input.name,
         startDate: input.startDate,
         endDate: input.endDate,
+      },
+    });
+  }),
+  updateStatus: trpcProcedure.input(z.object({
+    projectId: z.string(),
+    status: z.enum(Object.values(ProjectStatus) as [keyof typeof ProjectStatus]),
+  })).mutation(async ({ input, ctx: { prisma, }, }) => {
+    await prisma.project.update({
+      where: {
+        id: input.projectId,
+      },
+      data: {
+        status: input.status,
       },
     });
   }),

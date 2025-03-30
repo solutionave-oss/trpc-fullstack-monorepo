@@ -16,7 +16,7 @@ model Account {
   password           String
   organisationMember OrganisationMember[]
   stakeHolders       StakeHolder[]
-  Tracking           Tracking[]
+  Tracking           TimeTracking[]
 }
 
 model Organisation {
@@ -113,11 +113,11 @@ model ProjectBoard {
 }
 
 model Ticket {
-  id             String        @id @default(cuid())
-  ProjectBoard   ProjectBoard? @relation(fields: [projectBoardId], references: [id])
+  id             String         @id @default(cuid())
+  ProjectBoard   ProjectBoard?  @relation(fields: [projectBoardId], references: [id])
   projectBoardId String?
   epics          Epic[]
-  Tracking       Tracking[]
+  Tracking       TimeTracking[]
 }
 
 model Milestone {
@@ -136,7 +136,7 @@ model Epic {
   milestoneId    String?
 }
 
-model Tracking {
+model TimeTracking {
   id         String    @id @default(cuid())
   account    Account   @relation(fields: [accountId], references: [id])
   accountId  String

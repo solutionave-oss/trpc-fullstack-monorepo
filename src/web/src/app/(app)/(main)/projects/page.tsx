@@ -49,8 +49,8 @@ export default function Index() {
               <td className="text-start border py-0.5 px-3">
                 { project.endDate }
               </td>
-              <td className="text-start border py-0.5 px-3">
-                { project.status }
+              <td className="text-start border py-0.5 px-3 capitalize">
+                { project.status?.replace(/_/g, ' ') }
               </td>
               <td className="text-start border py-0.5 px-3">
                 <Dropdown
