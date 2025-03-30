@@ -6,7 +6,7 @@ import { useParams, } from 'next/navigation';
 import { useCallback, useEffect, } from 'react';
 import { useForm, } from 'react-hook-form';
 import { api, } from 'src/web/src/client/trpc';
-import { Dropdown, } from 'src/web/src/components/Dropdown';
+import { ProjectStatusChanger, } from 'src/web/src/components/projects/ProjectStatusChanger';
 import { localToUTC, utcToLocal, } from 'src/web/src/utils/converters';
 import { notify, } from 'src/web/src/utils/notifier';
 import * as z from 'zod';
@@ -45,9 +45,7 @@ export default function Index() {
     });
   }, [ projectId, setValue, ]);
 
-  useEffect(() => {
-    loadData();
-  }, [ loadData, ]);
+  useEffect(loadData, [ loadData, ]);
 
   const onSubmit = async (data: FormData) => {
     await api.projectRouter.updateProject.mutate({
@@ -64,18 +62,10 @@ export default function Index() {
     <div className='flex gap-6'>
       <div className='flex flex-row gap-3'>
         <div>Project Status</div>
-        <Dropdown
-          options={ statuses.map((status) => ({
-            label: status.replace(/_/g, ' '), value: status,
-          })) }
-          onClick={ async (data) => {
-            api.projectRouter.updateStatus.mutate({
-              projectId,
-              status: data.value,
-            }).then(loadData);
-          } }>
+        <ProjectStatusChanger loadData={ loadData }
+          projectId={ projectId }>
           <span className='capitalize'>{ statusWatched?.replace(/_/g, ' ') ?? "Select Status" }</span>
-        </Dropdown>
+        </ProjectStatusChanger>
       </div>
       <div>
         <form onSubmit={ handleSubmit(onSubmit) }

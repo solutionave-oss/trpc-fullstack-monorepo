@@ -5,18 +5,21 @@ import Link from 'next/link';
 import { useEffect, useState, } from 'react';
 import { api, } from 'src/web/src/client/trpc';
 import { Dropdown, } from 'src/web/src/components/Dropdown';
+import { ProjectStatusChanger, } from 'src/web/src/components/projects/ProjectStatusChanger';
 
 export default function Index() {
   const [ projects, setProjects, ] =
     useState<Awaited<ReturnType<typeof api.projectRouter.getProjects.query>>>();
 
-  useEffect(() => {
+  const loadData = () => {
     api.projectRouter.getProjects.query().then((value) => {
       if (value) {
         setProjects(value);
       }
     });
-  }, []);
+  };
+
+  useEffect(loadData, [ loadData, ]);
 
   return (
     <div>
@@ -50,7 +53,12 @@ export default function Index() {
                 { project.endDate }
               </td>
               <td className="text-start border py-0.5 px-3 capitalize">
-                { project.status?.replace(/_/g, ' ') }
+
+                <ProjectStatusChanger projectId={ project.id }
+                  loadData={ loadData }>
+                  <span className='capitalize'>{ project.status?.replace(/_/g, ' ') }</span>
+                </ProjectStatusChanger>
+
               </td>
               <td className="text-start border py-0.5 px-3">
                 <Dropdown
